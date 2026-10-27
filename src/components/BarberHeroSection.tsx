@@ -25,7 +25,11 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       id="hero"
       className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between pt-32 pb-8 sm:pb-12 bg-cover bg-center bg-no-repeat overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(180deg, rgba(11,11,11,0.82) 0%, rgba(11,11,11,0.90) 65%, rgba(11,11,11,1) 100%), url('/assets/img/hero-fachada.jpg')`,
+        backgroundImage: `
+          radial-gradient(ellipse at 75% 50%, rgba(11,11,11,0.45) 0%, rgba(11,11,11,0.82) 65%, rgba(11,11,11,0.98) 100%),
+          linear-gradient(180deg, rgba(11,11,11,0.78) 0%, rgba(11,11,11,0.52) 40%, rgba(11,11,11,0.88) 80%, rgba(11,11,11,1) 100%),
+          url('/assets/img/m2-fachada-cinematic.jpg')
+        `,
       }}
     >
       {/* Dynamic Barber Cutout Layer */}

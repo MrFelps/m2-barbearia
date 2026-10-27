@@ -42,7 +42,7 @@ export const UnitsSection: React.FC<UnitsSectionProps> = ({ onSelectUnit }) => {
                     alt={unit.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/assets/img/hero-fachada.jpg';
+                      (e.currentTarget as HTMLImageElement).src = '/assets/img/m2-fachada.jpg';
                     }}
                   />
                   <div className="absolute top-3 left-3 bg-ink/90 border border-neutral-800 px-3 py-1 text-[10px] font-display uppercase tracking-widest text-white rounded-sm">

@@ -81,7 +81,7 @@ export const BarberQualificationsSection: React.FC = () => {
                 alt="Técnica de barbearia clássica"
                 className="w-full h-[440px] sm:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/assets/img/hero-fachada.jpg';
+                  (e.currentTarget as HTMLImageElement).src = '/assets/img/m2-fachada.jpg';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-60" />
