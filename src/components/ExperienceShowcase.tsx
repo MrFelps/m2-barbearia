@@ -3,19 +3,19 @@ import React from 'react';
 export const ExperienceShowcase: React.FC = () => {
   const images = [
     {
-      src: '/assets/img/m2-corte-real.jpg',
-      title: 'Corte de Precisão',
-      desc: 'Fade milimétrico, tesoura e acabamento impecável.',
+      src: '/assets/img/felipe-em-acao.jpg',
+      title: 'Visagismo & Fade de Precisão',
+      desc: 'Felipe Boccardo em ação: alinhamento craniano e acabamento milimétrico.',
     },
     {
-      src: '/assets/img/itaim-bibi/atendimento.jpg',
-      title: 'Atendimento Individual',
-      desc: 'Cadeiras anatômicas e conforto absoluto.',
+      src: '/assets/img/barbeiro-equipe.jpg',
+      title: 'Técnica e Atendimento',
+      desc: 'Cadeiras anatômicas, ergonomia e foco nos detalhes.',
     },
     {
-      src: '/assets/img/itaim-bibi/unidade.jpg',
-      title: 'Espaço Executivo',
-      desc: 'Cafeteria, destilados e ambiente reservado.',
+      src: '/assets/img/m2-fachada.jpg',
+      title: 'Espaço Executivo M2',
+      desc: 'Ambiente climatizado, recepção moderna e bar exclusivo.',
     },
   ];
 
