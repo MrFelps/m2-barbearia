@@ -8,9 +8,9 @@ export const ExperienceShowcase: React.FC = () => {
       desc: 'Felipe Boccardo em ação: alinhamento craniano e acabamento milimétrico.',
     },
     {
-      src: '/assets/img/barbeiro-equipe.jpg',
-      title: 'Técnica e Atendimento',
-      desc: 'Cadeiras anatômicas, ergonomia e foco nos detalhes.',
+      src: '/assets/img/felipe-micropigmentacao.jpg',
+      title: 'Técnica e Alta Precisão',
+      desc: 'Procedimentos especializados, ergonomia e foco nos detalhes.',
     },
     {
       src: '/assets/img/m2-fachada.jpg',
