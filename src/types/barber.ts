@@ -1,3 +1,19 @@
+export interface BarberProfile {
+  name: string;
+  role: string;
+  badge: string;
+  photoUrl: string;
+  instagramUrl: string;
+  instagramHandle: string;
+  googleReviewUrl: string;
+  bookingAppUrl: string;
+  bio: string;
+  yearsOfExperience: number;
+  totalAppointments: string;
+  ratingScore: string;
+  specialties: string[];
+}
+
 export interface ServiceItem {
   id: string;
   name: string;
@@ -30,6 +46,7 @@ export interface CustomerReview {
   rating: number;
   comment: string;
   date: string;
+  verifiedOnGoogle?: boolean;
 }
 
 export interface BookingState {

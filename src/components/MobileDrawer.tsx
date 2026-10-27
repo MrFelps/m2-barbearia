@@ -15,12 +15,11 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   if (!isOpen) return null;
 
   const links = [
-    { label: 'Nossa Marca', href: '#marca' },
-    { label: 'Barba & Cabelo', href: '#servicos' },
-    { label: 'Nossas Unidades', href: '#unidades' },
-    { label: 'Avaliações', href: '#avaliacoes' },
-    { label: 'Trabalhe Conosco', href: '#recrutamento' },
-    { label: 'Contato', href: '#contato' },
+    { label: 'Perfil & Qualificações', href: '#qualificacoes' },
+    { label: 'Cortes & Serviços', href: '#servicos' },
+    { label: 'Experiência & Bancada', href: '#experiencia' },
+    { label: 'Unidades & Maps', href: '#unidades' },
+    { label: 'Avaliações do Google', href: '#avaliacoes' },
   ];
 
   return (

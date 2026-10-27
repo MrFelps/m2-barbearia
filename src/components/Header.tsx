@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, X } from 'lucide-react';
+import { BARBER_PROFILE } from '../data/barberData';
 
 interface HeaderProps {
   isScrolled: boolean;
@@ -23,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo & Professional Name */}
         <a href="#hero" className="flex items-center gap-3 group focus:outline-none">
           <img
             src="/assets/img/logo-simbolo.png"
@@ -32,33 +33,30 @@ export const Header: React.FC<HeaderProps> = ({
           />
           <div className="flex flex-col">
             <span className="font-display uppercase tracking-[0.2em] font-bold text-base sm:text-lg text-white">
-              M2 Barbearia
+              {BARBER_PROFILE.name}
             </span>
             <span className="text-[9px] uppercase tracking-[0.25em] text-textFaint">
-              Tradição Clássica
+              M2 Barbearia • Portfólio
             </span>
           </div>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          <a href="#marca" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
-            Nossa Marca
+        <nav className="hidden lg:flex items-center gap-7">
+          <a href="#qualificacoes" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
+            Perfil
           </a>
           <a href="#servicos" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
-            Barba & Cabelo
+            Cortes & Serviços
+          </a>
+          <a href="#experiencia" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
+            Experiência
           </a>
           <a href="#unidades" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
             Unidades
           </a>
           <a href="#avaliacoes" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
-            Avaliações
-          </a>
-          <a href="#recrutamento" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
-            Trabalhe Conosco
-          </a>
-          <a href="#contato" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
-            Contato
+            Avaliações Google
           </a>
         </nav>
 
@@ -68,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onOpenBooking}
             className="h-11 min-h-[44px] px-6 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.2em] font-semibold transition-all shadow-md shadow-red-950/40 rounded-sm"
           >
-            Agende
+            Agendar
           </button>
 
           <button

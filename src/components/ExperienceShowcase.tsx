@@ -20,7 +20,7 @@ export const ExperienceShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-ink border-b border-neutral-800/80">
+    <section id="experiencia" className="py-20 bg-ink border-b border-neutral-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-[11px] font-display uppercase tracking-[0.3em] text-brand-red">

@@ -2,15 +2,13 @@ import React from 'react';
 import { BrandBar } from './components/BrandBar';
 import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
-import { HeroSection } from './components/HeroSection';
+import { BarberHeroSection } from './components/BarberHeroSection';
 import { PromoBanner } from './components/PromoBanner';
-import { BrandStorySection } from './components/BrandStorySection';
+import { BarberQualificationsSection } from './components/BarberQualificationsSection';
 import { ServicesSection } from './components/ServicesSection';
 import { ExperienceShowcase } from './components/ExperienceShowcase';
 import { UnitsSection } from './components/UnitsSection';
 import { ReviewsSection } from './components/ReviewsSection';
-import { RecruitmentSection } from './components/RecruitmentSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { BookingBottomSheet } from './modals/BookingBottomSheet';
@@ -53,16 +51,14 @@ export const App: React.FC = () => {
 
       {/* Main Content Sections */}
       <main className="flex-1">
-        <HeroSection onOpenBooking={() => openBooking()} />
+        <BarberHeroSection onOpenBooking={() => openBooking()} />
         <BrandBar />
         <PromoBanner />
-        <BrandStorySection />
+        <BarberQualificationsSection />
         <ServicesSection onSelectService={(id) => openBooking(id)} />
         <ExperienceShowcase />
         <UnitsSection onSelectUnit={(id) => openBooking(undefined, id)} />
         <ReviewsSection />
-        <RecruitmentSection />
-        <ContactSection />
       </main>
 
       {/* Footer */}
