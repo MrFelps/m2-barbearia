@@ -32,7 +32,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         `,
       }}
     >
-      {/* Dynamic Barber Cutout Layer */}
+      {/* Dynamic Barber Cutout Layer (z-10) */}
       <div
         className="absolute right-0 sm:right-4 md:right-8 lg:right-16 xl:right-28 bottom-12 sm:bottom-14 pointer-events-none flex items-end justify-end select-none transition-transform duration-75"
         style={{
@@ -49,6 +49,16 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
           className="h-[55vh] sm:h-[68vh] md:h-[78vh] lg:h-[84vh] max-h-[820px] w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
         />
       </div>
+
+      {/* Layer (z-[15]): Soft Dark Gradient between Barber Photo (z-10) and Foreground Text (z-20) */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[560px] pointer-events-none z-[15] select-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 68% 58% at 46% 50%, rgba(11,11,11,0.92) 0%, rgba(11,11,11,0.78) 45%, rgba(11,11,11,0.30) 75%, rgba(11,11,11,0) 100%)',
+        }}
+        aria-hidden="true"
+      />
 
       {/* Layer (z-20): Foreground information & buttons */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center text-center relative z-20">
