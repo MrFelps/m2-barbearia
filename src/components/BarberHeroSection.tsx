@@ -48,12 +48,14 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         />
       </div>
 
-      {/* Layer (z-[15]): Soft Dark Gradient between Barber Photo (z-10) and Foreground Text (z-20) */}
+      {/* Layer (z-[15]): Seamless Full-Bleed Dark Gradient between Barber Photo (z-10) and Foreground Text (z-20) */}
       <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[560px] pointer-events-none z-[15] select-none"
+        className="absolute inset-0 pointer-events-none z-[15] select-none"
         style={{
-          background:
-            'radial-gradient(ellipse 68% 58% at 46% 50%, rgba(11,11,11,0.92) 0%, rgba(11,11,11,0.78) 45%, rgba(11,11,11,0.30) 75%, rgba(11,11,11,0) 100%)',
+          background: `
+            radial-gradient(ellipse 55% 50% at 46% 50%, rgba(11,11,11,0.90) 0%, rgba(11,11,11,0.65) 35%, rgba(11,11,11,0.20) 65%, rgba(11,11,11,0) 85%),
+            linear-gradient(90deg, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.40) 45%, rgba(11,11,11,0) 70%)
+          `,
         }}
         aria-hidden="true"
       />
