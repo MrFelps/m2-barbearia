@@ -54,11 +54,11 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       <div className="max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center text-center relative z-20">
         {/* Salon / Bench Emblem */}
         <div className="relative mb-5 group">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-brand-red p-1 bg-ink-elevated shadow-2xl transition-transform duration-500 group-hover:scale-105">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-brand-red p-2 bg-ink-elevated shadow-2xl transition-transform duration-500 group-hover:scale-105 flex items-center justify-center">
             <img
-              src="/assets/img/itaim-bibi/atendimento.jpg"
-              alt="Bancada M2"
-              className="w-full h-full object-cover rounded-full"
+              src="/assets/img/logo-m2-white.png"
+              alt="M2 Barbearia"
+              className="w-full h-full object-contain"
             />
           </div>
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-ink-elevated border border-neutral-700 text-brand-red px-3 py-0.5 text-[9px] sm:text-[10px] font-display uppercase tracking-widest font-semibold rounded-full whitespace-nowrap shadow-md">

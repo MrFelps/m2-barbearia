@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { BARBER_PROFILE } from '../data/barberData';
+import { M2Logo } from './M2Logo';
 
 interface HeaderProps {
   isScrolled: boolean;
@@ -26,11 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo & Professional Name */}
         <a href="#hero" className="flex items-center gap-3 group focus:outline-none">
-          <img
-            src="/assets/img/logo-simbolo.png"
-            alt="M2 Barbearia"
-            className="h-10 sm:h-11 w-auto transition-transform group-hover:scale-105"
-          />
+          <M2Logo size={42} />
           <div className="flex flex-col">
             <span className="font-display uppercase tracking-[0.2em] font-bold text-base sm:text-lg text-white">
               {BARBER_PROFILE.name}

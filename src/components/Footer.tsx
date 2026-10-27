@@ -1,5 +1,6 @@
 import React from 'react';
 import { BARBER_PROFILE } from '../data/barberData';
+import { M2Logo } from './M2Logo';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -11,14 +12,7 @@ export const Footer: React.FC = () => {
           {/* Brand & Barber Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img
-                src="/assets/img/simbolo-footer.png"
-                alt="M2 Barbearia"
-                className="h-10 w-auto"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/assets/img/logo-simbolo.png';
-                }}
-              />
+              <M2Logo size={38} />
               <div>
                 <span className="font-display uppercase tracking-[0.2em] font-bold text-base text-white block">
                   {BARBER_PROFILE.name}
