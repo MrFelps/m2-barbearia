@@ -12,13 +12,15 @@ import { ReviewsSection } from './components/ReviewsSection';
 import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { BookingBottomSheet } from './modals/BookingBottomSheet';
+import { HeroImageAdjuster } from './components/HeroImageAdjuster';
 import { useHeaderState } from './hooks/useHeaderState';
 import { useBookingFlow } from './hooks/useBookingFlow';
+import { useHeroAdjuster } from './hooks/useHeroAdjuster';
 
 export const App: React.FC = () => {
   const { isScrolled, isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useHeaderState();
   const {
-    isOpen,
+    isOpen: isBookingOpen,
     form,
     isSuccess,
     selectedService,
@@ -28,6 +30,16 @@ export const App: React.FC = () => {
     updateField,
     submitBooking,
   } = useBookingFlow();
+
+  const {
+    settings: imageSettings,
+    isOpen: isAdjusterOpen,
+    isSaved: isAdjusterSaved,
+    setIsOpen: setIsAdjusterOpen,
+    updateSetting,
+    saveSettings,
+    resetSettings,
+  } = useHeroAdjuster();
 
   return (
     <div className="min-h-screen bg-ink text-white flex flex-col relative selection:bg-brand-red selection:text-white">
@@ -51,7 +63,10 @@ export const App: React.FC = () => {
 
       {/* Main Content Sections */}
       <main className="flex-1">
-        <BarberHeroSection onOpenBooking={() => openBooking()} />
+        <BarberHeroSection
+          onOpenBooking={() => openBooking()}
+          imageSettings={imageSettings}
+        />
         <BrandBar />
         <PromoBanner />
         <BarberQualificationsSection />
@@ -67,9 +82,20 @@ export const App: React.FC = () => {
       {/* Floating WhatsApp Action */}
       <WhatsAppFloatingButton />
 
+      {/* Interactive Visual Adjuster for Hero Photo */}
+      <HeroImageAdjuster
+        settings={imageSettings}
+        isOpen={isAdjusterOpen}
+        isSaved={isAdjusterSaved}
+        onToggle={() => setIsAdjusterOpen((prev) => !prev)}
+        onUpdate={updateSetting}
+        onSave={saveSettings}
+        onReset={resetSettings}
+      />
+
       {/* Booking Bottom Sheet / Modal */}
       <BookingBottomSheet
-        isOpen={isOpen}
+        isOpen={isBookingOpen}
         onClose={closeBooking}
         form={form}
         selectedService={selectedService}

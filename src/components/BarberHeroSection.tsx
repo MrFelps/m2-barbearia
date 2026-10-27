@@ -1,12 +1,25 @@
 import React from 'react';
 import { Calendar, Star, ChevronDown } from 'lucide-react';
 import { BARBER_PROFILE } from '../data/barberData';
+import { HeroImageSettings } from '../types/barber';
 
 interface BarberHeroSectionProps {
   onOpenBooking: () => void;
+  imageSettings?: HeroImageSettings;
 }
 
-export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({ onOpenBooking }) => {
+export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
+  onOpenBooking,
+  imageSettings,
+}) => {
+  const currentSettings: HeroImageSettings = imageSettings || {
+    scale: 100,
+    xOffset: 0,
+    yOffset: 0,
+    zIndex: 10,
+    opacity: 100,
+  };
+
   return (
     <section
       id="hero"
@@ -15,19 +28,25 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({ onOpenBook
         backgroundImage: `linear-gradient(180deg, rgba(11,11,11,0.82) 0%, rgba(11,11,11,0.90) 65%, rgba(11,11,11,1) 100%), url('/assets/img/hero-fachada.jpg')`,
       }}
     >
-      {/* Layer 2 (z-10): Barber Cutout standing between background and text */}
+      {/* Dynamic Barber Cutout Layer */}
       <div
-        className="absolute right-0 sm:right-4 md:right-8 lg:right-16 xl:right-28 bottom-12 sm:bottom-14 z-10 pointer-events-none flex items-end justify-end select-none"
+        className="absolute right-0 sm:right-4 md:right-8 lg:right-16 xl:right-28 bottom-12 sm:bottom-14 pointer-events-none flex items-end justify-end select-none transition-transform duration-75"
+        style={{
+          zIndex: currentSettings.zIndex,
+          opacity: currentSettings.opacity / 100,
+          transform: `translate(${currentSettings.xOffset}px, ${currentSettings.yOffset}px) scale(${currentSettings.scale / 100})`,
+          transformOrigin: 'bottom center',
+        }}
         aria-hidden="true"
       >
         <img
           src="/assets/img/felipe-boccardo.png"
           alt={BARBER_PROFILE.name}
-          className="h-[55vh] sm:h-[68vh] md:h-[78vh] lg:h-[84vh] max-h-[820px] w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] opacity-30 sm:opacity-95 transition-opacity"
+          className="h-[55vh] sm:h-[68vh] md:h-[78vh] lg:h-[84vh] max-h-[820px] w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
         />
       </div>
 
-      {/* Layer 3 (z-20): Foreground information & buttons */}
+      {/* Layer (z-20): Foreground information & buttons */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center text-center relative z-20">
         {/* Salon / Bench Emblem */}
         <div className="relative mb-5 group">

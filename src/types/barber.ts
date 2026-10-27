@@ -1,3 +1,11 @@
+export interface HeroImageSettings {
+  scale: number; // in percentage, e.g. 100
+  xOffset: number; // in pixels or %, e.g. 0
+  yOffset: number; // in pixels, e.g. 0
+  zIndex: number; // 10 (behind text) or 30 (in front of text)
+  opacity: number; // 20 to 100
+}
+
 export interface BarberProfile {
   name: string;
   role: string;
