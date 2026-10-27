@@ -5,8 +5,8 @@ const STORAGE_KEY = 'm2_hero_image_settings';
 
 const DEFAULT_SETTINGS: HeroImageSettings = {
   scale: 100,
-  xOffset: 0,
-  yOffset: 0,
+  xOffset: 10,
+  yOffset: -40,
   zIndex: 10,
   opacity: 100,
 };

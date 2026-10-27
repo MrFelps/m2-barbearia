@@ -41,6 +41,9 @@ export const App: React.FC = () => {
     resetSettings,
   } = useHeroAdjuster();
 
+  // O painel só é exibido se explicitamente solicitado via parâmetro ?ajuste=true na URL
+  const showAdjuster = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('ajuste');
+
   return (
     <div className="min-h-screen bg-ink text-white flex flex-col relative selection:bg-brand-red selection:text-white">
       {/* Fixed top brand bar */}
@@ -82,16 +85,18 @@ export const App: React.FC = () => {
       {/* Floating WhatsApp Action */}
       <WhatsAppFloatingButton />
 
-      {/* Interactive Visual Adjuster for Hero Photo */}
-      <HeroImageAdjuster
-        settings={imageSettings}
-        isOpen={isAdjusterOpen}
-        isSaved={isAdjusterSaved}
-        onToggle={() => setIsAdjusterOpen((prev) => !prev)}
-        onUpdate={updateSetting}
-        onSave={saveSettings}
-        onReset={resetSettings}
-      />
+      {/* Interactive Visual Adjuster for Hero Photo (oculto por padrão, ativado apenas com ?ajuste=true) */}
+      {showAdjuster && (
+        <HeroImageAdjuster
+          settings={imageSettings}
+          isOpen={isAdjusterOpen}
+          isSaved={isAdjusterSaved}
+          onToggle={() => setIsAdjusterOpen((prev) => !prev)}
+          onUpdate={updateSetting}
+          onSave={saveSettings}
+          onReset={resetSettings}
+        />
+      )}
 
       {/* Booking Bottom Sheet / Modal */}
       <BookingBottomSheet
