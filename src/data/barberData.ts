@@ -4,7 +4,7 @@ export const BARBER_PROFILE: BarberProfile = {
   name: 'Felipe Boccardo',
   role: 'Master Barber & Visagista Masculino',
   badge: 'Bancada Especial M2',
-  photoUrl: '/assets/img/itaim-bibi/atendimento.jpg',
+  photoUrl: '/assets/img/felipe-boccardo.png',
   instagramUrl: 'https://instagram.com/m2barbearia',
   instagramHandle: '@m2barbearia',
   googleReviewUrl: 'https://www.google.com/search?q=M2+Barbearia+avaliacoes#lrd=0x0:0x0,3',
