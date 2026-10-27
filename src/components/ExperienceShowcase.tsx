@@ -3,9 +3,9 @@ import React from 'react';
 export const ExperienceShowcase: React.FC = () => {
   const images = [
     {
-      src: '/assets/img/itaim-bibi/navalha.jpg',
-      title: 'Navalha de Precisão',
-      desc: 'Acabamento milimétrico e toalhas quentes.',
+      src: '/assets/img/m2-corte-real.jpg',
+      title: 'Corte de Precisão',
+      desc: 'Fade milimétrico, tesoura e acabamento impecável.',
     },
     {
       src: '/assets/img/itaim-bibi/atendimento.jpg',

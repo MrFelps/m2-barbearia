@@ -77,8 +77,8 @@ export const BarberQualificationsSection: React.FC = () => {
           <div className="relative group">
             <div className="relative overflow-hidden rounded-sm border border-neutral-800 shadow-2xl">
               <img
-                src="/assets/img/itaim-bibi/navalha.jpg"
-                alt="Técnica de barbearia clássica"
+                src="/assets/img/m2-corte-real.jpg"
+                alt="Atendimento e corte de precisão M2"
                 className="w-full h-[440px] sm:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = '/assets/img/m2-fachada.jpg';
