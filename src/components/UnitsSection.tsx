@@ -3,11 +3,7 @@ import { MapPin, Phone, Clock, ExternalLink, Calendar } from 'lucide-react';
 import { UNITS_DATA } from '../data/barberData';
 import { UnitLocation } from '../types/barber';
 
-interface UnitsSectionProps {
-  onSelectUnit: (unitId: string) => void;
-}
-
-export const UnitsSection: React.FC<UnitsSectionProps> = ({ onSelectUnit }) => {
+export const UnitsSection: React.FC = () => {
   return (
     <section id="unidades" className="py-20 sm:py-28 bg-ink-elevated border-b border-neutral-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,18 +69,36 @@ export const UnitsSection: React.FC<UnitsSectionProps> = ({ onSelectUnit }) => {
                         <p>{unit.hoursSaturday}</p>
                       </div>
                     </div>
+
+                    <div className="pt-2 border-t border-neutral-800/80">
+                      <span className="text-[10px] uppercase font-display tracking-wider text-textFaint block mb-1">
+                        Formas de Pagamento:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {['PIX', 'Crédito', 'Débito', 'Dinheiro'].map((pay) => (
+                          <span
+                            key={pay}
+                            className="px-2 py-0.5 bg-neutral-900 border border-neutral-800 text-[10px] font-display uppercase tracking-wider text-neutral-300 rounded-sm"
+                          >
+                            {pay}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="p-6 pt-0 space-y-2.5">
-                <button
-                  onClick={() => onSelectUnit(unit.id)}
+                <a
+                  href="https://sites.appbarber.com.br/m2barbearia-7nna"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full min-h-[44px] bg-brand-red hover:bg-red-700 text-white font-display uppercase text-xs tracking-wider font-semibold rounded-sm flex items-center justify-center gap-2 transition-colors"
                 >
                   <Calendar className="w-3.5 h-3.5" />
-                  <span>Agendar nesta unidade</span>
-                </button>
+                  <span>Agendar no AppBarber</span>
+                </a>
 
                 <a
                   href={unit.mapsUrl}

@@ -7,14 +7,12 @@ interface HeaderProps {
   isScrolled: boolean;
   isMobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
-  onOpenBooking: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   isScrolled,
   isMobileMenuOpen,
   onToggleMobileMenu,
-  onOpenBooking,
 }) => {
   return (
     <header
@@ -59,12 +57,14 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action & Mobile Toggle */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={onOpenBooking}
-            className="h-11 min-h-[44px] px-6 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.2em] font-semibold transition-all shadow-md shadow-red-950/40 rounded-sm"
+          <a
+            href="https://sites.appbarber.com.br/m2barbearia-7nna"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="h-11 min-h-[44px] px-6 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.2em] font-semibold flex items-center justify-center transition-all shadow-md shadow-red-950/40 rounded-sm"
           >
             Agendar
-          </button>
+          </a>
 
           <button
             onClick={onToggleMobileMenu}

@@ -3,11 +3,7 @@ import { Clock, ArrowRight } from 'lucide-react';
 import { SERVICES_DATA } from '../data/barberData';
 import { ServiceItem } from '../types/barber';
 
-interface ServicesSectionProps {
-  onSelectService: (serviceId: string) => void;
-}
-
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectService }) => {
+export const ServicesSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('todos');
 
   const categories = [
@@ -96,13 +92,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   </span>
                 </div>
 
-                <button
-                  onClick={() => onSelectService(service.id)}
+                <a
+                  href="https://sites.appbarber.com.br/m2barbearia-7nna"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="min-h-[44px] px-4 bg-neutral-900 hover:bg-brand-red text-white text-xs font-display uppercase tracking-wider rounded-sm flex items-center gap-2 transition-colors border border-neutral-800 group-hover:border-transparent"
                 >
                   <span>Agendar</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </a>
               </div>
             </div>
           ))}

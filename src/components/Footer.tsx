@@ -30,13 +30,12 @@ export const Footer: React.FC = () => {
           {/* Units */}
           <div>
             <h4 className="text-[11px] font-display uppercase tracking-[0.25em] text-textFaint mb-4">
-              Unidades de Atendimento
+              Localização
             </h4>
-            <ul className="space-y-2 text-xs text-neutral-400">
-              <li><a href="#unidades" className="hover:text-white transition-colors">Matriz Central — Av. Paulista</a></li>
-              <li><a href="#unidades" className="hover:text-white transition-colors">Unidade Jardins — Oscar Freire</a></li>
-              <li><a href="#unidades" className="hover:text-white transition-colors">Unidade Alphaville — Rio Negro</a></li>
-            </ul>
+            <p className="text-xs text-neutral-300">Rua América do Sul, 57</p>
+            <p className="text-xs text-neutral-400 mt-0.5">Parque Novo Oratório</p>
+            <p className="text-xs text-neutral-400">Santo André - SP • CEP 09270-410</p>
+            <p className="text-xs text-brand-gold mt-2 font-medium">Tel / WhatsApp: (11) 96031-8915</p>
           </div>
 
           {/* Direct Actions */}
@@ -45,7 +44,7 @@ export const Footer: React.FC = () => {
               Acesso Rápido
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
-              <li><a href="#hero" className="hover:text-white transition-colors">Agendamento Online</a></li>
+              <li><a href="https://sites.appbarber.com.br/m2barbearia-7nna" target="_blank" rel="noopener noreferrer" className="text-brand-red font-semibold hover:underline">Agendar no AppBarber</a></li>
               <li><a href={BARBER_PROFILE.instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram Oficial</a></li>
               <li><a href={BARBER_PROFILE.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Google Avaliações</a></li>
               <li><a href="#experiencia" className="hover:text-white transition-colors">Ambiente & Galeria</a></li>
@@ -55,11 +54,12 @@ export const Footer: React.FC = () => {
           {/* Hours & Contact */}
           <div>
             <h4 className="text-[11px] font-display uppercase tracking-[0.25em] text-textFaint mb-4">
-              Horários da Bancada
+              Horários de Atendimento
             </h4>
-            <p className="text-xs text-neutral-400">Segunda a Sexta: 09h às 21h</p>
-            <p className="text-xs text-neutral-400 mt-1">Sábados: 09h às 19h</p>
-            <p className="text-xs text-neutral-500 mt-3">Agendamentos com hora marcada via aplicativo.</p>
+            <p className="text-xs text-neutral-300 font-medium">Segunda a Sábado:</p>
+            <p className="text-xs text-neutral-400">09:00 - 12:00 | 13:00 - 20:00</p>
+            <p className="text-xs text-neutral-300 font-medium mt-1.5">Domingo:</p>
+            <p className="text-xs text-neutral-400">08:00 - 13:00</p>
           </div>
         </div>
 

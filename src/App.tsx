@@ -25,7 +25,6 @@ export const App: React.FC = () => {
     isSuccess,
     selectedService,
     selectedUnit,
-    openBooking,
     closeBooking,
     updateField,
     submitBooking,
@@ -54,28 +53,23 @@ export const App: React.FC = () => {
         isScrolled={isScrolled}
         isMobileMenuOpen={isMobileMenuOpen}
         onToggleMobileMenu={toggleMobileMenu}
-        onOpenBooking={() => openBooking()}
       />
 
       {/* Mobile Drawer */}
       <MobileDrawer
         isOpen={isMobileMenuOpen}
         onClose={closeMobileMenu}
-        onOpenBooking={() => openBooking()}
       />
 
       {/* Main Content Sections */}
       <main className="flex-1">
-        <BarberHeroSection
-          onOpenBooking={() => openBooking()}
-          imageSettings={imageSettings}
-        />
+        <BarberHeroSection imageSettings={imageSettings} />
         <BrandBar />
         <PromoBanner />
         <BarberQualificationsSection />
-        <ServicesSection onSelectService={(id) => openBooking(id)} />
+        <ServicesSection />
         <ExperienceShowcase />
-        <UnitsSection onSelectUnit={(id) => openBooking(undefined, id)} />
+        <UnitsSection />
         <ReviewsSection />
       </main>
 

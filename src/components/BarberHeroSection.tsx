@@ -4,12 +4,10 @@ import { BARBER_PROFILE } from '../data/barberData';
 import { HeroImageSettings } from '../types/barber';
 
 interface BarberHeroSectionProps {
-  onOpenBooking: () => void;
   imageSettings?: HeroImageSettings;
 }
 
 export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
-  onOpenBooking,
   imageSettings,
 }) => {
   const currentSettings: HeroImageSettings = imageSettings || {
@@ -94,14 +92,16 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
 
         {/* The 3 Main Action Buttons */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
-          {/* Button 1: Agendar um Horário */}
-          <button
-            onClick={onOpenBooking}
+          {/* Button 1: Agendar no AppBarber */}
+          <a
+            href={BARBER_PROFILE.bookingAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto h-12 min-h-[44px] px-7 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.2em] font-semibold flex items-center justify-center gap-2.5 rounded-sm transition-all shadow-xl shadow-red-950/50"
           >
             <Calendar className="w-4 h-4" />
-            <span>Agendar um Horário</span>
-          </button>
+            <span>Agendar no AppBarber</span>
+          </a>
 
           {/* Button 2: Verificar Instagram */}
           <a
@@ -132,7 +132,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       {/* Hero Foot Info */}
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-textFaint relative z-20">
         <span className="font-display tracking-[0.2em] uppercase text-[11px]">
-          Matriz Central • Jardins • Alphaville
+          Rua América do Sul, 57 • Santo André / SP
         </span>
         <a
           href="#qualificacoes"

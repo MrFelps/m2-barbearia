@@ -3,8 +3,8 @@ import { BookingState } from '../types/barber';
 import { SERVICES_DATA, UNITS_DATA } from '../data/barberData';
 
 const INITIAL_BOOKING: BookingState = {
-  selectedServiceId: 'corte-classico',
-  selectedUnitId: 'unidade-central',
+  selectedServiceId: 'corte',
+  selectedUnitId: 'unidade-santo-andre',
   selectedDate: '',
   selectedTime: '14:00',
   customerName: '',
@@ -53,7 +53,7 @@ export function useBookingFlow() {
       .join('\n');
 
     const encoded = encodeURIComponent(text);
-    const targetPhone = selectedUnit.whatsapp || '5511999990001';
+    const targetPhone = selectedUnit.whatsapp || '5511960318915';
     window.open(`https://wa.me/${targetPhone}?text=${encoded}`, '_blank');
     setIsSuccess(true);
   };
