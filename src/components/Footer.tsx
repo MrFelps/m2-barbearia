@@ -32,9 +32,17 @@ export const Footer: React.FC = () => {
             <h4 className="text-[11px] font-display uppercase tracking-[0.25em] text-textFaint mb-4">
               Localização
             </h4>
-            <p className="text-xs text-neutral-300">Rua América do Sul, 57</p>
-            <p className="text-xs text-neutral-400 mt-0.5">Parque Novo Oratório</p>
-            <p className="text-xs text-neutral-400">Santo André - SP • CEP 09270-410</p>
+            <a
+              href="https://share.google/YLvYi2iUDPjDRO0h2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <p className="text-xs text-neutral-300 group-hover:text-brand-red transition-colors">Rua América do Sul, 57</p>
+              <p className="text-xs text-neutral-400 mt-0.5">Parque Novo Oratório</p>
+              <p className="text-xs text-neutral-400">Santo André - SP • CEP 09270-410</p>
+              <p className="text-[11px] text-brand-gold mt-1.5 underline">Abrir no Google Maps →</p>
+            </a>
             <p className="text-xs text-brand-gold mt-2 font-medium">Tel / WhatsApp: (11) 96031-8915</p>
           </div>
 

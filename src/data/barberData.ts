@@ -7,7 +7,7 @@ export const BARBER_PROFILE: BarberProfile = {
   photoUrl: '/assets/img/felipe-boccardo.png',
   instagramUrl: 'https://www.instagram.com/m2barbearia_01/',
   instagramHandle: '@m2barbearia_01',
-  googleReviewUrl: 'https://www.google.com/search?q=M2+Barbearia+Santo+Andre+avaliacoes',
+  googleReviewUrl: 'https://www.google.com/search?q=M2+Barbearia+Santo+Andre+avaliacoes#lrd=0x94ce69b8f846db75:0x7b3da7f27dbb32f4,3,,,,',
   bookingAppUrl: 'https://sites.appbarber.com.br/m2barbearia-7nna',
   bio: 'Especialista em visagismo clássico, cortes de alta precisão na tesoura e barboterapia tradicional. Uma nova experiência para uma antiga tradição.',
   yearsOfExperience: 8,
@@ -129,7 +129,7 @@ export const UNITS_DATA: UnitLocation[] = [
     whatsapp: '5511960318915',
     hoursWeekday: 'Segunda a Sábado: 09h às 12h | 13h às 20h',
     hoursSaturday: 'Domingo: 08h às 13h',
-    mapsUrl: 'https://maps.google.com/?q=Rua+Am%C3%A9rica+do+Sul+57+Parque+Novo+Orat%C3%B3rio+Santo+Andr%C3%A9+SP',
+    mapsUrl: 'https://share.google/YLvYi2iUDPjDRO0h2',
     imageUrl: '/assets/img/m2-fachada.jpg',
   },
 ];

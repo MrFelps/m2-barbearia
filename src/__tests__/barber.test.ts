@@ -40,7 +40,7 @@ describe('M2 Barbearia Portfolio Data Integrity & Business Logic', () => {
     expect(unit.whatsapp).toBe('5511960318915');
     expect(unit.address).toContain('América do Sul');
     expect(unit.hoursWeekday).toBeTruthy();
-    expect(unit.mapsUrl).toContain('maps.google.com');
+    expect(unit.mapsUrl).toContain('share.google');
   });
 
   it('should have valid Google customer reviews with ratings of 5 stars', () => {
