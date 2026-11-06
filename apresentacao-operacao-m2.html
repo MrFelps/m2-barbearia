@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M2 Barbearia — Demonstração Operacional Interativa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-ink: #0D0D0E;
+      --bg-surface: #17181A;
+      --bg-card: #1F2124;
+      --border-subtle: #2D3139;
+      --brand-red: #DC2626;
+      --brand-red-hover: #B91C1C;
+      --text-main: #FFFFFF;
+      --text-muted: #9CA3AF;
+      --emerald: #10B981;
+      --amber: #F59E0B;
+      --blue: #3B82F6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-ink);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-col: column;
+      padding-bottom: 90px;
+    }
+
+    /* Top Brand Bar */
+    .brand-top-bar {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, #DC2626 0%, #FFFFFF 50%, #1E3A8A 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      width: 100%;
+    }
+
+    /* Navigation Floating Dock */
+    .floating-dock {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(23, 24, 26, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(75, 85, 99, 0.6);
+      border-radius: 9999px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      z-index: 99;
+      max-width: 95vw;
+      overflow-x: auto;
+    }
+
+    .dock-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      padding: 0 6px;
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .dock-label { display: block; }
+    }
+
+    .dock-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      min-height: 44px;
+    }
+
+    .dock-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .dock-btn.active {
+      background: var(--brand-red);
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+    }
+
+    /* Views container */
+    .view-screen {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .view-screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card Styles */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .header-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+    }
+
+    .title-group h1 {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .title-group p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+
+    .badge-red {
+      background: rgba(220, 38, 38, 0.15);
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      color: #F87171;
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34D399;
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #FBBF24;
+    }
+
+    .badge-blue {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #60A5FA;
+    }
+
+    /* Button styles */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      min-height: 44px;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--brand-red);
+      color: #FFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-red-hover);
+    }
+
+    .btn-outline {
+      background: var(--bg-ink);
+      border-color: var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: #6B7280;
+    }
+
+    .btn-success {
+      background: #059669;
+      color: #FFF;
+    }
+
+    .btn-success:hover {
+      background: #047857;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 200;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: #10B981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 300;
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-top-bar"></div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast">Ação concluída com sucesso!</div>
+
+  <!-- FLOATING DOCK -->
+  <div class="floating-dock">
+    <span class="dock-label">Painel M2:</span>
+    <button class="dock-btn active" onclick="switchView('bancada', this)">
+      💈 QR Bancada
+    </button>
+    <button class="dock-btn" onclick="switchView('cliente', this)">
+      📱 Visão do Cliente
+    </button>
+    <button class="dock-btn" onclick="switchView('caixa', this)">
+      💰 Frente de Caixa
+    </button>
+    <button class="dock-btn" onclick="switchView('fluxograma', this)">
+      📊 Fluxograma
+    </button>
+  </div>
+
+  <div class="container">
+
+    <!-- ================= VIEW 1: BANCADA QR ================= -->
+    <div id="view-bancada" class="view-screen active">
+      <div class="header-panel">
+        <div class="title-group">
+          <span class="badge badge-red">Ponto de Contato na Cadeira</span>
+          <h1 style="margin-top: 6px;">Display Individual do Barbeiro</h1>
+          <p>O que fica exposto na bancada ou na tela do celular do profissional</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline" id="btn-station-1" onclick="selectStation(1)" style="border-color: var(--brand-red);">
+            Bancada 01: Felipe
+          </button>
+          <button class="btn btn-outline" id="btn-station-2" onclick="selectStation(2)">
+            Bancada 02: Gabriel
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; margin: 30px 0;">
+        <div class="card" style="width: 100%; max-width: 360px; text-align: center; border: 2px solid var(--border-subtle); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+          <div class="badge badge-red" id="card-station-badge" style="margin-bottom: 12px;">
+            Bancada 1 — M2 Barbearia
+          </div>
+          <h2 id="card-barber-name" style="font-size: 22px; font-weight: 900;">Felipe Boccardo</h2>
+          <p id="card-barber-role" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Master Barber & Visagista</p>
+
+          <div style="background: var(--bg-ink); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px; margin: 20px auto; display: inline-block;">
+            <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=DC2626&bgcolor=0D0D0E&data=https://sites.appbarber.com.br/m2barbearia-7nna" alt="QR Code" style="width: 200px; height: 200px; display: block; border-radius: 8px;">
+          </div>
+
+          <p style="font-size: 13px; font-weight: 700;">Aponte a câmera do celular</p>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Avalie no Google em 10 segundos ou acesse o PIX</p>
+
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; gap: 4px; color: #FBBF24; font-size: 13px; font-weight: 700;">
+            ★★★★★ <span style="color: #FFF; font-size: 12px; margin-left: 4px;">5.0 no Google</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" onclick="simulateScan()">
+          Simular Leitura do Cliente (Ver Tela do Celular) →
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 2: CLIENTE PÓS-QR ================= -->
+    <div id="view-cliente" class="view-screen">
+      <div style="max-width: 420px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <span class="badge badge-red">M2 Barbearia</span>
+          <h1 style="font-size: 20px; font-weight: 900; margin-top: 6px;">Atendimento Concluído</h1>
+          <p style="font-size: 12px; color: var(--text-muted);">Como foi sua experiência na cadeira?</p>
+        </div>
+
+        <div class="card" style="text-align: center; margin-bottom: 16px;">
+          <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-ink); border: 1px solid var(--border-subtle); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--brand-red);">
+            FB
+          </div>
+          <h2 id="client-screen-barber" style="font-size: 18px; font-weight: 800;">Felipe Boccardo</h2>
+          <p style="font-size: 12px; color: var(--text-muted);">Bancada 01 • Master Barber</p>
+          <div style="margin-top: 8px; color: #FBBF24; font-size: 12px; font-weight: 700;">★★★★★ 5.0 Estrelas</div>
+        </div>
+
+        <!-- Botão Google -->
+        <a href="https://www.google.com/search?q=M2+Barbearia+Santo+Andre+avaliacoes#lrd=0x94ce69b8f846db75:0x7b3da7f27dbb32f4,3,,,," target="_blank" class="btn btn-primary" style="width: 100%; padding: 16px; margin-bottom: 16px; justify-content: space-between; border-radius: 12px;">
+          <div style="text-align: left;">
+            <div style="font-size: 14px; font-weight: 800;">Avaliar Atendimento no Google</div>
+            <div style="font-size: 11px; opacity: 0.8; font-weight: 400;">Leva menos de 10 segundos</div>
+          </div>
+          <span>★ 5.0</span>
+        </a>
+
+        <!-- PIX Box -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 8px;">
+            <span>Chave PIX da Barbearia</span>
+            <span style="color: var(--text-muted);">TELEFONE</span>
+          </div>
+          <div style="background: var(--bg-ink); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-family: monospace; font-size: 13px; font-weight: 600;">(11) 96031-8915</span>
+            <button class="btn btn-outline" onclick="copyPixKey()" style="padding: 6px 12px; font-size: 11px; min-height: 36px; color: #FCA5A5;">
+              Copiar
+            </button>
+          </div>
+          <p style="font-size: 10px; color: var(--text-muted); margin-top: 6px;">Titular: M2 Barbearia Santo André Ltda</p>
+        </div>
+
+        <!-- Próximo corte e Instagram -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <a href="https://sites.appbarber.com.br/m2barbearia-7nna" target="_blank" class="card" style="text-decoration: none; text-align: center; color: white;">
+            <div style="font-size: 18px; margin-bottom: 4px;">📅</div>
+            <div style="font-size: 12px; font-weight: 800;">Próximo Corte</div>
+            <div style="font-size: 10px; color: var(--text-muted);">Garantir horário</div>
+          </a>
+          <a href="https://www.instagram.com/m2barbearia_01/" target="_blank" class="card" style="text-decoration: none; text-align: center; color: white;">
+            <div style="font-size: 18px; margin-bottom: 4px;">📸</div>
+            <div style="font-size: 12px; font-weight: 800;">Instagram</div>
+            <div style="font-size: 10px; color: var(--text-muted);">@m2barbearia_01</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 3: FRENTE DE CAIXA ================= -->
+    <div id="view-caixa" class="view-screen">
+      <div class="header-panel">
+        <div class="title-group">
+          <span class="badge badge-emerald">Operação Financeira</span>
+          <h1 style="margin-top: 6px;">Frente de Caixa do Dia</h1>
+          <p>Baixa em tempo real de atendimentos e conciliação por método</p>
+        </div>
+      </div>
+
+      <!-- Métricas do Dia -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div class="card">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Total Faturado Hoje</div>
+          <div id="metric-total-paid" style="font-size: 28px; font-weight: 900; color: var(--emerald); margin-top: 4px;">R$ 45,00</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Em Atendimento</div>
+          <div id="metric-in-progress" style="font-size: 28px; font-weight: 900; color: var(--amber); margin-top: 4px;">1 cliente</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Aguardando Baixa</div>
+          <div id="metric-pending" style="font-size: 28px; font-weight: 900; color: var(--brand-red); margin-top: 4px;">1 cliente</div>
+        </div>
+      </div>
+
+      <!-- Lista de Comandas -->
+      <div class="card">
+        <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px;">Atendimentos do Dia</h3>
+        <div id="appointment-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Injetado via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 4: FLUXOGRAMA EMBARCADO ================= -->
+    <div id="view-fluxograma" class="view-screen">
+      <div class="header-panel">
+        <div class="title-group">
+          <span class="badge badge-blue">Documentação Técnica</span>
+          <h1 style="margin-top: 6px;">Fluxograma de Processo Completo</h1>
+          <p>Automações por horário, cancelamento, apresentação na cadeira e fechamento contábil</p>
+        </div>
+        <a href="fluxograma-processo-m2.html" target="_blank" class="btn btn-outline">
+          Abrir em Nova Aba ↗
+        </a>
+      </div>
+
+      <div class="card" style="line-height: 1.7; font-size: 14px; color: #D1D5DB;">
+        <h3 style="font-size: 16px; font-weight: 800; color: #FFF; margin-bottom: 8px;">Como o ciclo opera na prática:</h3>
+        <ol style="padding-left: 20px; margin-bottom: 16px;">
+          <li><strong>Agendamento:</strong> Registrado online ou WhatsApp com disparo de confirmação prévia e botão de cancelamento.</li>
+          <li><strong>Início Automático:</strong> Bateu o horário agendado, o sistema muda o status para <code>EM ATENDIMENTO</code> sem clique manual.</li>
+          <li><strong>Display do Barbeiro na Cadeira:</strong> Barbeiro apresenta seu QR Code exclusivo (acrílico ou celular). O cliente avalia no Google enquanto finaliza.</li>
+          <li><strong>Baixa no Caixa:</strong> Atendente ou barbeiro seleciona o meio (PIX, Cartão ou Dinheiro), dá baixa e o sistema alimenta o fechamento de caixa automaticamente.</li>
+          <li><strong>Pós-Venda (+30 min):</strong> Mensagem automática enviada no WhatsApp agradecendo a preferência.</li>
+        </ol>
+        <p style="font-size: 12px; color: var(--text-muted);">Consulte o arquivo <code>fluxograma-processo-m2.html</code> para o diagrama gráfico com Mermaid.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE BAIXA DE PAGAMENTO -->
+  <div id="payment-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">Confirmar Recebimento</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Selecione o método pago pelo cliente:</p>
+
+      <div style="background: var(--bg-ink); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div id="modal-client-name" style="font-size: 13px; font-weight: 800;">Rodrigo Antunes</div>
+          <div id="modal-service-name" style="font-size: 11px; color: var(--text-muted);">Corte + Barba</div>
+        </div>
+        <div id="modal-service-price" style="font-size: 18px; font-weight: 900; color: var(--emerald);">R$ 80,00</div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">Forma de Pagamento</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <button type="button" class="btn btn-outline active-method" id="pay-pix" onclick="selectPayMethod('pix')" style="border-color: var(--brand-red);">PIX</button>
+          <button type="button" class="btn btn-outline" id="pay-credito" onclick="selectPayMethod('credito')">Cartão Crédito</button>
+          <button type="button" class="btn btn-outline" id="pay-debito" onclick="selectPayMethod('debito')">Cartão Débito</button>
+          <button type="button" class="btn btn-outline" id="pay-dinheiro" onclick="selectPayMethod('dinheiro')">Dinheiro</button>
+        </div>
+      </div>
+
+      <div id="pix-account-selector" style="margin-bottom: 20px; background: var(--bg-ink); padding: 10px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 6px;">Conta PIX de Destino:</label>
+        <select id="pix-account-select" style="width: 100%; background: var(--bg-surface); color: white; border: 1px solid var(--border-subtle); padding: 8px; border-radius: 6px; font-size: 12px;">
+          <option value="loja">Conta Loja (CNPJ / Telefone Barbearia)</option>
+          <option value="gestor">Conta Gestão / Recepção</option>
+        </select>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">Voltar</button>
+        <button class="btn btn-success" onclick="confirmPayment()" style="flex: 1.3;">Confirmar Baixa ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DADOS MOCK INTERATIVOS
+    let appointments = [
+      { id: 1, name: 'Rodrigo Antunes', phone: '(11) 98451-2290', barber: 'Felipe Boccardo', service: 'Corte + Barba', price: 80, time: '14:00', status: 'em_atendimento' },
+      { id: 2, name: 'Marcelo Dias', phone: '(11) 97120-4491', barber: 'Felipe Boccardo', service: 'Nevou ❄️', price: 170, time: '15:00', status: 'agendado' },
+      { id: 3, name: 'Lucas Ferreira', phone: '(11) 99882-3312', barber: 'Gabriel Santos', service: 'Corte Tradicional', price: 45, time: '14:30', status: 'pendente_pagamento' },
+      { id: 4, name: 'Eduardo Ramos', phone: '(11) 96541-1123', barber: 'Felipe Boccardo', service: 'Barba Terapia', price: 45, time: '13:00', status: 'pago', method: 'PIX (Loja)' }
+    ];
+
+    let currentSelectedAppt = null;
+    let currentPayMethod = 'pix';
+
+    function switchView(viewName, btn) {
+      document.querySelectorAll('.view-screen').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.dock-btn').forEach(el => el.classList.remove('active'));
+
+      const targetView = document.getElementById('view-' + viewName);
+      if (targetView) targetView.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      if (viewName === 'caixa') {
+        renderAppointments();
+      }
+    }
+
+    function selectStation(num) {
+      const btn1 = document.getElementById('btn-station-1');
+      const btn2 = document.getElementById('btn-station-2');
+      const badge = document.getElementById('card-station-badge');
+      const name = document.getElementById('card-barber-name');
+      const role = document.getElementById('card-barber-role');
+      const clientBarber = document.getElementById('client-screen-barber');
+
+      if (num === 1) {
+        btn1.style.borderColor = 'var(--brand-red)';
+        btn2.style.borderColor = 'var(--border-subtle)';
+        badge.innerText = 'Bancada 1 — M2 Barbearia';
+        name.innerText = 'Felipe Boccardo';
+        role.innerText = 'Master Barber & Visagista';
+        clientBarber.innerText = 'Felipe Boccardo';
+      } else {
+        btn2.style.borderColor = 'var(--brand-red)';
+        btn1.style.borderColor = 'var(--border-subtle)';
+        badge.innerText = 'Bancada 2 — M2 Barbearia';
+        name.innerText = 'Gabriel Santos';
+        role.innerText = 'Especialista em Fade & Degradê';
+        clientBarber.innerText = 'Gabriel Santos';
+      }
+    }
+
+    function simulateScan() {
+      const clientDockBtn = document.querySelectorAll('.dock-btn')[1];
+      switchView('cliente', clientDockBtn);
+      showToast('QR Code escaneado com sucesso!');
+    }
+
+    function copyPixKey() {
+      navigator.clipboard.writeText('5511960318915');
+      showToast('Chave PIX copiada para a área de transferência!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
+    function renderAppointments() {
+      const list = document.getElementById('appointment-list');
+      list.innerHTML = '';
+
+      let totalPaid = 0;
+      let inProgress = 0;
+      let pending = 0;
+
+      appointments.forEach(appt => {
+        if (appt.status === 'pago') totalPaid += appt.price;
+        if (appt.status === 'em_atendimento') inProgress++;
+        if (appt.status === 'pendente_pagamento') pending++;
+
+        let statusBadge = '';
+        if (appt.status === 'pago') {
+          statusBadge = '<span class="badge badge-emerald">Pago (' + (appt.method || 'Concluído') + ')</span>';
+        } else if (appt.status === 'em_atendimento') {
+          statusBadge = '<span class="badge badge-amber">Em Atendimento</span>';
+        } else if (appt.status === 'pendente_pagamento') {
+          statusBadge = '<span class="badge badge-red">Aguardando Baixa</span>';
+        } else if (appt.status === 'cancelado') {
+          statusBadge = '<span class="badge" style="background: #374151; color: #9CA3AF;">Cancelado</span>';
+        } else {
+          statusBadge = '<span class="badge badge-blue">Agendado</span>';
+        }
+
+        let actionBtn = '';
+        if (appt.status !== 'pago' && appt.status !== 'cancelado') {
+          actionBtn = `
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-success" style="padding: 6px 14px; font-size: 11px; min-height: 36px;" onclick="openPaymentModal(${appt.id})">
+                Dar Baixa ✓
+              </button>
+              <button class="btn btn-outline" style="padding: 6px 10px; font-size: 11px; min-height: 36px; color: #EF4444;" onclick="cancelAppt(${appt.id})" title="Cancelar">
+                ✕
+              </button>
+            </div>
+          `;
+        }
+
+        const item = document.createElement('div');
+        item.style.cssText = 'background: var(--bg-ink); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;';
+        item.innerHTML = `
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: monospace; font-size: 11px; font-weight: 800; background: var(--bg-surface); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border-subtle);">${appt.time}</span>
+              <strong style="font-size: 14px;">${appt.name}</strong>
+              <span style="font-size: 11px; color: var(--text-muted);">${appt.phone}</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              ${appt.service} • <span style="color: #E5E7EB; font-weight: 600;">${appt.barber}</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="text-align: right;">
+              <div style="font-size: 14px; font-weight: 800;">R$ ${appt.price.toFixed(2).replace('.', ',')}</div>
+              <div>${statusBadge}</div>
+            </div>
+            ${actionBtn}
+          </div>
+        `;
+        list.appendChild(item);
+      });
+
+      document.getElementById('metric-total-paid').innerText = 'R$ ' + totalPaid.toFixed(2).replace('.', ',');
+      document.getElementById('metric-in-progress').innerText = inProgress + (inProgress === 1 ? ' cliente' : ' clientes');
+      document.getElementById('metric-pending').innerText = pending + (pending === 1 ? ' cliente' : ' clientes');
+    }
+
+    function openPaymentModal(id) {
+      currentSelectedAppt = appointments.find(a => a.id === id);
+      if (!currentSelectedAppt) return;
+
+      document.getElementById('modal-client-name').innerText = currentSelectedAppt.name;
+      document.getElementById('modal-service-name').innerText = currentSelectedAppt.service + ' • ' + currentSelectedAppt.barber;
+      document.getElementById('modal-service-price').innerText = 'R$ ' + currentSelectedAppt.price.toFixed(2).replace('.', ',');
+
+      selectPayMethod('pix');
+      document.getElementById('payment-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('payment-modal').classList.remove('active');
+      currentSelectedAppt = null;
+    }
+
+    function selectPayMethod(method) {
+      currentPayMethod = method;
+      ['pix', 'credito', 'debito', 'dinheiro'].forEach(m => {
+        const btn = document.getElementById('pay-' + m);
+        if (m === method) {
+          btn.style.borderColor = 'var(--brand-red)';
+          btn.style.background = 'rgba(220, 38, 38, 0.15)';
+          btn.style.color = '#FFF';
+        } else {
+          btn.style.borderColor = 'var(--border-subtle)';
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text-main)';
+        }
+      });
+
+      const pixBox = document.getElementById('pix-account-selector');
+      pixBox.style.display = method === 'pix' ? 'block' : 'none';
+    }
+
+    function confirmPayment() {
+      if (!currentSelectedAppt) return;
+      currentSelectedAppt.status = 'pago';
+
+      if (currentPayMethod === 'pix') {
+        const acc = document.getElementById('pix-account-select').value;
+        currentSelectedAppt.method = acc === 'loja' ? 'PIX Loja' : 'PIX Gestor';
+      } else if (currentPayMethod === 'credito') {
+        currentSelectedAppt.method = 'Cartão Crédito';
+      } else if (currentPayMethod === 'debito') {
+        currentSelectedAppt.method = 'Cartão Débito';
+      } else {
+        currentSelectedAppt.method = 'Dinheiro';
+      }
+
+      closeModal();
+      renderAppointments();
+      showToast('Baixa de R$ ' + currentSelectedAppt.price + ' confirmada!');
+    }
+
+    function cancelAppt(id) {
+      const appt = appointments.find(a => a.id === id);
+      if (appt && confirm('Deseja realmente cancelar o agendamento de ' + appt.name + '?')) {
+        appt.status = 'cancelado';
+        renderAppointments();
+        showToast('Agendamento cancelado. Vaga liberada na agenda.');
+      }
+    }
+
+    // Inicialização
+    renderAppointments();
+  </script>
+</body>
+</html>
