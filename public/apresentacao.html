@@ -42,7 +42,6 @@
       padding-bottom: 90px;
     }
 
-    /* Fixed top brand strip */
     .brand-top-bar {
       height: 4px;
       width: 100%;
@@ -116,7 +115,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* FULL-BLEED HERO SECTION (ZERO SIDE BORDERS) */
+    /* HERO FULL BLEED */
     .hero-fullbleed {
       position: relative;
       width: 100vw;
@@ -136,7 +135,6 @@
       padding: 100px 20px 60px;
     }
 
-    /* EXACT BARBER PHOTO POSITIONING & SCALE */
     .barber-photo-layer {
       position: absolute;
       right: clamp(20px, 6vw, 120px);
@@ -156,7 +154,6 @@
       filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.95));
     }
 
-    /* EXACT FULL-BLEED SEAMLESS GRADIENT (NO BORDER MARKS) */
     .barber-gradient-layer {
       position: absolute;
       inset: 0;
@@ -168,7 +165,6 @@
         linear-gradient(90deg, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.40) 45%, rgba(11,11,11,0) 70%);
     }
 
-    /* FOREGROUND TEXT LAYER */
     .hero-foreground {
       position: relative;
       z-index: 20;
@@ -178,18 +174,18 @@
       padding: 0 16px;
     }
 
-    /* Common Card & Button elements */
+    /* Common containers */
     .content-section {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 60px 20px;
     }
 
     .card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 20px;
+      border-radius: 12px;
+      padding: 24px;
     }
 
     .badge {
@@ -213,7 +209,7 @@
     .btn {
       padding: 12px 22px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -298,7 +294,7 @@
   <!-- FLOATING NAVIGATION DOCK -->
   <div class="floating-dock">
     <button class="dock-btn active" onclick="switchView('apresentacao', this)">
-      👤 Apresentação Oficial (Site)
+      👤 Apresentação Completa (Site)
     </button>
     <button class="dock-btn" onclick="switchView('bancada', this)">
       💈 QR Bancada
@@ -311,11 +307,11 @@
     </button>
   </div>
 
-  <!-- ================= VIEW 1: APRESENTAÇÃO OFICIAL 100% FULL-BLEED ================= -->
+  <!-- ================= VIEW 1: APRESENTAÇÃO COMPLETA COM TODAS AS FOTOS E SEÇÕES ================= -->
   <div id="view-apresentacao" class="view-screen active">
+
+    <!-- 1. HERO EM CAMADAS COM A FOTO REAL DO FELIPE -->
     <section class="hero-fullbleed">
-      
-      <!-- FOTO REAL DO FELIPE BOCCARDO COM AS COORDENADAS EXATAS (X: 10px, Y: -40px, Scale: 100%) -->
       <div class="barber-photo-layer">
         <img
           src="assets/img/felipe-boccardo.png"
@@ -324,13 +320,9 @@
         >
       </div>
 
-      <!-- DEGRADÊ ESCURO FULL-BLEED (SEM BORDAS DURAS) -->
       <div class="barber-gradient-layer"></div>
 
-      <!-- CONTEÚDO PRINCIPAL SOBREPOSTO -->
       <div class="hero-foreground">
-        
-        <!-- Logo e Selo de Bancada -->
         <div style="margin-bottom: 20px;">
           <div style="width: 86px; height: 86px; margin: 0 auto; border-radius: 50%; border: 2px solid var(--brand-red); padding: 8px; background: rgba(13,13,14,0.9); box-shadow: 0 15px 35px rgba(0,0,0,0.9);">
             <img src="assets/img/logo-m2-white.png" alt="M2 Barbearia" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.src='public/assets/img/logo-m2-white.png'">
@@ -356,7 +348,6 @@
           Especialista em visagismo clássico, cortes de alta precisão na tesoura e barboterapia tradicional. Uma nova experiência para uma antiga tradição em Santo André/SP.
         </p>
 
-        <!-- BOTÕES OFICIAIS -->
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
           <a href="https://sites.appbarber.com.br/m2barbearia-7nna" target="_blank" class="btn btn-primary">
             📅 Agendar no AppBarber
@@ -369,7 +360,6 @@
           </a>
         </div>
 
-        <!-- MÉTRICAS -->
         <div style="display: flex; justify-content: center; gap: 28px; margin-top: 36px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 12px; color: var(--text-muted);">
           <div><strong style="color: #FFF; font-size: 16px;">8+ Anos</strong> de Experiência</div>
           <div><strong style="color: #FFF; font-size: 16px;">+4.500</strong> Atendimentos</div>
@@ -378,50 +368,313 @@
       </div>
     </section>
 
-    <!-- SEÇÃO DE SERVIÇOS & VALORES (SEM COMPACTAÇÃO) -->
-    <div class="content-section">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px;">
-        <div>
-          <span class="badge badge-red">Catálogo Oficial</span>
-          <h2 style="font-size: 22px; font-weight: 800; margin-top: 6px;">Serviços & Procedimentos</h2>
-        </div>
-        <span style="font-size: 12px; color: var(--text-muted);">Rua América do Sul, 57 — Santo André</span>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-weight: 800; font-size: 15px;">Corte</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">30 min • Tesoura / Máquina</div>
-          </div>
-          <div style="font-size: 17px; font-weight: 900; color: #FFF;">R$ 45,00</div>
-        </div>
-
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-weight: 800; font-size: 15px;">Barba</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">30 min • Toalha quente & navalha</div>
-          </div>
-          <div style="font-size: 17px; font-weight: 900; color: #FFF;">R$ 45,00</div>
-        </div>
-
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center; border-color: rgba(220,38,38,0.5);">
-          <div>
-            <div style="font-weight: 800; font-size: 15px;">Corte + Barba (Combo)</div>
-            <div style="font-size: 11px; color: #FCA5A5; margin-top: 2px;">60 min • Atendimento completo</div>
-          </div>
-          <div style="font-size: 17px; font-weight: 900; color: #FCA5A5;">R$ 80,00</div>
-        </div>
-
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-weight: 800; font-size: 15px;">Nevou ❄️ (Platinado)</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">45 min • Descoloração global</div>
-          </div>
-          <div style="font-size: 17px; font-weight: 900; color: #FFF;">R$ 170,00</div>
-        </div>
-      </div>
+    <!-- 2. PROMO BANNER (PRIMEIRO ATENDIMENTO) -->
+    <div style="background: linear-gradient(90deg, #1F2124 0%, #17181A 100%); border-y: 1px solid var(--border-subtle); padding: 14px 20px; text-align: center;">
+      <span class="badge badge-red" style="margin-right: 8px;">Primeira Visita</span>
+      <span style="font-size: 13px; font-weight: 600; color: #FFF;">
+        Apresente seu agendamento no balcão e ganhe 15% OFF no primeiro corte ou barba.
+      </span>
     </div>
+
+    <!-- 3. SEÇÃO DE QUALIFICAÇÕES & FOTO DO FELIPE EM AÇÃO -->
+    <section class="content-section" style="border-bottom: 1px solid var(--border-subtle);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="color: var(--brand-red); font-weight: 800; font-size: 13px;">01</span>
+            <span style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">Perfil Profissional</span>
+          </div>
+
+          <h2 class="font-oswald" style="font-size: clamp(30px, 4vw, 44px); text-transform: uppercase; line-height: 1.1; margin-bottom: 16px;">
+            Qualificações & <br><span style="color: var(--text-muted);">Domínio da Técnica Clássica</span>
+          </h2>
+
+          <p style="font-size: 14px; color: #D1D5DB; line-height: 1.7; margin-bottom: 24px;">
+            Com formação em escolas tradicionais de barbearia e especialização contínua em visagismo masculino, cada atendimento é executado com foco absoluto na anatomia craniana, simetria facial e na rotina profissional do cliente.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px;">
+            <div>
+              <div style="font-size: 22px; font-weight: 900; color: #FFF;">8 Anos</div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Experiência</div>
+            </div>
+            <div>
+              <div style="font-size: 22px; font-weight: 900; color: #FFF;">+4.500</div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Cortes & Barbas</div>
+            </div>
+            <div>
+              <div style="font-size: 22px; font-weight: 900; color: #FBBF24;">★ 4.98</div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Satisfação</div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">O que você encontra na bancada:</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E5E7EB;">✓ Corte & Degradê Fade de Precisão</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E5E7EB;">✓ Barba Tradicional com Toalha Quente</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E5E7EB;">✓ Perfil e Pezinho na Navalha</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E5E7EB;">✓ Nevou ❄️ & Platinado Perfeito</div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #E5E7EB;">✓ Tratamentos & Químicas Alinhadoras</div>
+          </div>
+        </div>
+
+        <!-- FOTO DO FELIPE EM AÇÃO COM O CARD DE BIOSSEGURANÇA -->
+        <div style="position: relative;">
+          <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
+            <img
+              src="assets/img/felipe-em-acao.jpg"
+              alt="Felipe Boccardo em ação na bancada"
+              style="width: 100%; height: 460px; object-fit: cover; display: block;"
+              onerror="this.src='public/assets/img/felipe-em-acao.jpg'"
+            >
+          </div>
+          <div style="position: absolute; bottom: -20px; left: 20px; background: rgba(23,24,26,0.95); backdrop-filter: blur(10px); border: 1px solid var(--border-subtle); padding: 16px 20px; border-radius: 10px; max-width: 280px; box-shadow: 0 15px 30px rgba(0,0,0,0.8);">
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--brand-red); display: block; margin-bottom: 4px;">
+              Navalhete & Toalha Quente
+            </span>
+            <p style="font-size: 12px; color: #D1D5DB; line-height: 1.5;">
+              Biossegurança rigorosa com lâminas 100% descartáveis e navalha esterilizada.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CATÁLOGO COMPLETO DE SERVIÇOS & PREÇOS (TODOS OS 11 SERVIÇOS) -->
+    <section class="content-section" style="border-bottom: 1px solid var(--border-subtle);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+        <div>
+          <span style="color: var(--brand-red); font-weight: 800; font-size: 13px;">02</span>
+          <span style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); font-weight: 700; margin-left: 8px;">Catálogo Oficial</span>
+          <h2 class="font-oswald" style="font-size: clamp(28px, 4vw, 40px); text-transform: uppercase; margin-top: 6px;">
+            Cortes & Procedimentos
+          </h2>
+        </div>
+        <a href="https://sites.appbarber.com.br/m2barbearia-7nna" target="_blank" class="btn btn-primary">
+          Ver no AppBarber ↗
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Corte</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">30 min • Diagnóstico capilar e tesoura</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 45,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Barba</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">30 min • Toalha quente e bálsamo</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 45,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; border-color: rgba(220,38,38,0.6);">
+          <div>
+            <div style="font-weight: 800; font-size: 16px; color: #FCA5A5;">Corte + Barba (Combo)</div>
+            <div style="font-size: 12px; color: #FCA5A5; margin-top: 2px;">60 min • Atendimento completo</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FCA5A5;">R$ 80,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Perfil Pezinho</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">15 min • Alinhamento na navalha</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 15,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Sobrancelha</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">15 min • Limpeza e desenho</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 15,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Cera Nasal e Orelha</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">15 min • Remoção higiênica rápida</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 15,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Botox Capilar</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">30 min • Hidratação e alinhamento</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 50,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Relaxamento</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">15 min • Soltura e controle de volume</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 30,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Progressiva</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">30 min • Alisamento de longa duração</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 60,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">Luzes</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">30 min • Mechas na touca personalizadas</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FFF;">R$ 70,00</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; border-color: rgba(220,38,38,0.6);">
+          <div>
+            <div style="font-weight: 800; font-size: 16px; color: #FCA5A5;">Nevou ❄️ (Platinado)</div>
+            <div style="font-size: 12px; color: #FCA5A5; margin-top: 2px;">45 min • Descoloração de alto padrão</div>
+          </div>
+          <div style="font-size: 18px; font-weight: 900; color: #FCA5A5;">R$ 170,00</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. GALERIA DE FOTOS DE EXPERIÊNCIA DA BARBEARIA -->
+    <section class="content-section" style="border-bottom: 1px solid var(--border-subtle);">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 36px;">
+        <span style="color: var(--brand-red); font-weight: 800; font-size: 13px;">03</span>
+        <span style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); font-weight: 700; margin-left: 8px;">Ambiente & Tradição</span>
+        <h2 class="font-oswald" style="font-size: clamp(30px, 4vw, 42px); text-transform: uppercase; margin-top: 8px;">
+          A Experiência M2 Barbearia
+        </h2>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
+          Cada detalhe arquitetônico foi planejado para proporcionar tranquilidade, pontualidade rigorosa e excelência estética.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <!-- Card 1 -->
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle); position: relative; background: #000;">
+          <img src="assets/img/felipe-em-acao.jpg" alt="Visagismo & Fade" style="width: 100%; height: 280px; object-fit: cover;" onerror="this.src='public/assets/img/felipe-em-acao.jpg'">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;">
+            <h3 style="font-size: 16px; font-weight: 800; color: #FFF;">Visagismo & Fade de Precisão</h3>
+            <p style="font-size: 12px; color: #D1D5DB; margin-top: 4px;">Alinhamento craniano e acabamento milimétrico na tesoura.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle); position: relative; background: #000;">
+          <img src="assets/img/felipe-micropigmentacao.jpg" alt="Técnica e Precisão" style="width: 100%; height: 280px; object-fit: cover;" onerror="this.src='public/assets/img/felipe-micropigmentacao.jpg'">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;">
+            <h3 style="font-size: 16px; font-weight: 800; color: #FFF;">Técnica e Alta Precisão</h3>
+            <p style="font-size: 12px; color: #D1D5DB; margin-top: 4px;">Procedimentos especializados, ergonomia e foco nos detalhes.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle); position: relative; background: #000;">
+          <img src="assets/img/m2-fachada.jpg" alt="Fachada da Unidade" style="width: 100%; height: 280px; object-fit: cover;" onerror="this.src='public/assets/img/m2-fachada.jpg'">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;">
+            <h3 style="font-size: 16px; font-weight: 800; color: #FFF;">Espaço Executivo M2</h3>
+            <p style="font-size: 12px; color: #D1D5DB; margin-top: 4px;">Ambiente climatizado, recepção moderna e bar exclusivo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. UNIDADE FÍSICA & HORÁRIOS DETALHADOS -->
+    <section class="content-section" style="border-bottom: 1px solid var(--border-subtle);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: center;">
+        <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle);">
+          <img src="assets/img/m2-fachada-cinematic.jpg" alt="Fachada M2 Santo André" style="width: 100%; height: 380px; object-fit: cover;" onerror="this.src='public/assets/img/m2-fachada-cinematic.jpg'">
+        </div>
+
+        <div>
+          <span style="color: var(--brand-red); font-weight: 800; font-size: 13px;">04</span>
+          <span style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); font-weight: 700; margin-left: 8px;">Nossa Unidade</span>
+          <h2 class="font-oswald" style="font-size: clamp(28px, 4vw, 40px); text-transform: uppercase; margin-top: 6px;">
+            M2 Barbearia — Santo André
+          </h2>
+
+          <div style="margin: 20px 0; display: flex; flex-direction: column; gap: 12px; font-size: 13.5px; color: #D1D5DB;">
+            <div>📍 <strong>Endereço:</strong> Rua América do Sul, 57 — Parque Novo Oratório, Santo André/SP</div>
+            <div>📞 <strong>Telefone / WhatsApp:</strong> (11) 96031-8915</div>
+            <div>🕒 <strong>Segunda a Sábado:</strong> 09:00 às 12:00 | 13:00 às 20:00</div>
+            <div>🕒 <strong>Domingo:</strong> 08:00 às 13:00</div>
+            <div>💳 <strong>Formas de Pagamento:</strong> Dinheiro, Cartão de Crédito, Cartão de Débito e PIX</div>
+          </div>
+
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="https://share.google/YLvYi2iUDPjDRO0h2" target="_blank" class="btn btn-primary">
+              📍 Abrir Rota no Google Maps
+            </a>
+            <a href="https://wa.me/5511960318915" target="_blank" class="btn btn-outline">
+              💬 Chamar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. AVALIAÇÕES GOOGLE VERIFICADAS -->
+    <section class="content-section" style="border-bottom: 1px solid var(--border-subtle);">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <span style="color: var(--brand-red); font-weight: 800; font-size: 13px;">05</span>
+        <span style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--text-muted); font-weight: 700; margin-left: 8px;">Depoimentos Reais</span>
+        <h2 class="font-oswald" style="font-size: clamp(28px, 4vw, 40px); text-transform: uppercase; margin-top: 6px;">
+          Avaliações Verificadas no Google
+        </h2>
+        <div style="color: #FBBF24; font-size: 16px; margin-top: 4px;">★★★★★ 5.0 Estrelas no Google Maps</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+        <div class="card">
+          <div style="color: #FBBF24; margin-bottom: 8px;">★★★★★</div>
+          <p style="font-size: 13px; color: #D1D5DB; line-height: 1.6; font-style: italic;">
+            "Padrão impecável do Felipe. O corte na navalha e o nevou ficaram sensacionais. Ambiente top na América do Sul."
+          </p>
+          <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 12px; font-weight: 800;">
+            Ricardo Silveira <span style="font-size: 10px; color: var(--emerald); font-weight: 700; margin-left: 6px;">✓ Verificado Google</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="color: #FBBF24; margin-bottom: 8px;">★★★★★</div>
+          <p style="font-size: 13px; color: #D1D5DB; line-height: 1.6; font-style: italic;">
+            "Faço cabelo e barba toda semana. Cerveja gelada, pontualidade e profissionais nota 10."
+          </p>
+          <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 12px; font-weight: 800;">
+            Gabriel Prado <span style="font-size: 10px; color: var(--emerald); font-weight: 700; margin-left: 6px;">✓ Verificado Google</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="color: #FBBF24; margin-bottom: 8px;">★★★★★</div>
+          <p style="font-size: 13px; color: #D1D5DB; line-height: 1.6; font-style: italic;">
+            "Melhor barbearia de Santo André. Atendimento de respeito e preço justo."
+          </p>
+          <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 12px; font-weight: 800;">
+            Lucas Medeiros <span style="font-size: 10px; color: var(--emerald); font-weight: 700; margin-left: 6px;">✓ Verificado Google</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. RODAPÉ INSTITUCIONAL -->
+    <footer style="padding: 40px 20px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-subtle);">
+      <div style="margin-bottom: 12px;">
+        <strong style="color: #FFF; font-size: 14px;">M2 Barbearia — Felipe Boccardo</strong>
+      </div>
+      <div>Rua América do Sul, 57 - Parque Novo Oratório, Santo André/SP • (11) 96031-8915</div>
+      <div style="margin-top: 12px; color: #6B7280;">&copy; 2026 M2 Barbearia. Todos os direitos reservados.</div>
+    </footer>
   </div>
 
   <!-- ================= VIEW 2: DISPLAY DE BANCADA ================= -->
@@ -433,8 +686,7 @@
 
       <div style="display: flex; justify-content: center; margin: 30px 0;">
         <div class="card" style="width: 100%; max-width: 380px; text-align: center; border: 2px solid var(--border-subtle); box-shadow: 0 25px 50px rgba(0,0,0,0.8); overflow: hidden;">
-          
-          <div style="background: radial-gradient(circle, #2A2D32 0%, #0D0D0E 100%); padding: 22px 14px 14px; border-bottom: 1px solid var(--border-subtle); margin: -20px -20px 18px -20px;">
+          <div style="background: radial-gradient(circle, #2A2D32 0%, #0D0D0E 100%); padding: 22px 14px 14px; border-bottom: 1px solid var(--border-subtle); margin: -24px -24px 18px -24px;">
             <div style="width: 96px; height: 96px; border-radius: 50%; overflow: hidden; border: 3px solid var(--brand-red); margin: 0 auto 10px; background: #000; box-shadow: 0 10px 25px rgba(0,0,0,0.8);">
               <img src="assets/img/felipe-boccardo.png" alt="Felipe Boccardo" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" onerror="this.src='public/assets/img/felipe-boccardo.png'">
             </div>
