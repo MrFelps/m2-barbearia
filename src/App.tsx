@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrandBar } from './components/BrandBar';
 import { Header } from './components/Header';
 import { MobileDrawer } from './components/MobileDrawer';
@@ -13,11 +13,19 @@ import { Footer } from './components/Footer';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { BookingBottomSheet } from './modals/BookingBottomSheet';
 import { HeroImageAdjuster } from './components/HeroImageAdjuster';
+import { ViewSwitcherBar, AppView } from './components/ViewSwitcherBar';
+import { BarberChairDisplay } from './components/station/BarberChairDisplay';
+import { CashierDashboard } from './components/pos/CashierDashboard';
+import { CustomerPostServiceView } from './components/pos/CustomerPostServiceView';
+import { BARBER_STATIONS } from './data/stationData';
+import { BarberStation } from './types/station';
 import { useHeaderState } from './hooks/useHeaderState';
 import { useBookingFlow } from './hooks/useBookingFlow';
 import { useHeroAdjuster } from './hooks/useHeroAdjuster';
 
 export const App: React.FC = () => {
+  const [activeView, setActiveView] = useState<AppView>('home');
+  const [activeStation, setActiveStation] = useState<BarberStation>(BARBER_STATIONS[0]);
   const { isScrolled, isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useHeaderState();
   const {
     isOpen: isBookingOpen,
@@ -40,47 +48,71 @@ export const App: React.FC = () => {
     resetSettings,
   } = useHeroAdjuster();
 
-  // O painel só é exibido se explicitamente solicitado via parâmetro ?ajuste=true na URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view') as AppView;
+    if (viewParam && ['home', 'bancada', 'caixa', 'cliente'].includes(viewParam)) {
+      setActiveView(viewParam);
+    }
+  }, []);
+
+  const handleSimulateClient = (station: BarberStation) => {
+    setActiveStation(station);
+    setActiveView('cliente');
+  };
+
   const showAdjuster = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('ajuste');
 
   return (
     <div className="min-h-screen bg-ink text-white flex flex-col relative selection:bg-brand-red selection:text-white">
-      {/* Fixed top brand bar */}
       <BrandBar fixed />
+      <ViewSwitcherBar activeView={activeView} onSelectView={setActiveView} />
 
-      {/* Navigation Header */}
-      <Header
-        isScrolled={isScrolled}
-        isMobileMenuOpen={isMobileMenuOpen}
-        onToggleMobileMenu={toggleMobileMenu}
-      />
+      {activeView === 'home' && (
+        <>
+          <Header
+            isScrolled={isScrolled}
+            isMobileMenuOpen={isMobileMenuOpen}
+            onToggleMobileMenu={toggleMobileMenu}
+          />
+          <MobileDrawer isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+          <main className="flex-1">
+            <BarberHeroSection imageSettings={imageSettings} />
+            <BrandBar />
+            <PromoBanner />
+            <BarberQualificationsSection />
+            <ServicesSection />
+            <ExperienceShowcase />
+            <UnitsSection />
+            <ReviewsSection />
+          </main>
+          <Footer />
+          <WhatsAppFloatingButton />
+        </>
+      )}
 
-      {/* Mobile Drawer */}
-      <MobileDrawer
-        isOpen={isMobileMenuOpen}
-        onClose={closeMobileMenu}
-      />
+      {activeView === 'bancada' && (
+        <main className="flex-1 py-6">
+          <BarberChairDisplay onSimulateClientScan={handleSimulateClient} />
+        </main>
+      )}
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        <BarberHeroSection imageSettings={imageSettings} />
-        <BrandBar />
-        <PromoBanner />
-        <BarberQualificationsSection />
-        <ServicesSection />
-        <ExperienceShowcase />
-        <UnitsSection />
-        <ReviewsSection />
-      </main>
+      {activeView === 'caixa' && (
+        <main className="flex-1 py-6">
+          <CashierDashboard />
+        </main>
+      )}
 
-      {/* Footer */}
-      <Footer />
+      {activeView === 'cliente' && (
+        <main className="flex-1">
+          <CustomerPostServiceView
+            station={activeStation}
+            onBackToMain={() => setActiveView('bancada')}
+          />
+        </main>
+      )}
 
-      {/* Floating WhatsApp Action */}
-      <WhatsAppFloatingButton />
-
-      {/* Interactive Visual Adjuster for Hero Photo (oculto por padrão, ativado apenas com ?ajuste=true) */}
-      {showAdjuster && (
+      {showAdjuster && activeView === 'home' && (
         <HeroImageAdjuster
           settings={imageSettings}
           isOpen={isAdjusterOpen}
@@ -92,7 +124,6 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* Booking Bottom Sheet / Modal */}
       <BookingBottomSheet
         isOpen={isBookingOpen}
         onClose={closeBooking}

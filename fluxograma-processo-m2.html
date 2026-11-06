@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M2 Barbearia — Fluxograma de Processo Operacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-ink: #0D0D0E;
+      --bg-surface: #17181A;
+      --bg-card: #1F2124;
+      --border-subtle: #2D3139;
+      --brand-red: #DC2626;
+      --brand-red-hover: #EF4444;
+      --text-main: #FFFFFF;
+      --text-muted: #9CA3AF;
+      --accent-blue: #3B82F6;
+      --accent-green: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-ink);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .badge-tag {
+      background: rgba(220, 38, 38, 0.15);
+      border: 1px solid var(--brand-red);
+      color: #FCA5A5;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #25282C;
+      border-color: #4B5563;
+    }
+
+    .btn-primary {
+      background: var(--brand-red);
+      border-color: var(--brand-red);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-red-hover);
+      border-color: var(--brand-red-hover);
+    }
+
+    .diagram-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 28px 16px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .diagram-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .diagram-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #E5E7EB;
+    }
+
+    .diagram-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
+    .grid-stages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stage-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .stage-card .num {
+      color: var(--brand-red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .stage-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stage-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    th {
+      background: #1C1E22;
+      color: #E5E7EB;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      color: #D1D5DB;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      font-size: 12px;
+      color: #6B7280;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      .actions-bar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="brand-title">
+          <span class="badge-tag">Engenharia de Processos</span>
+          <span style="color: var(--text-muted); font-size: 13px;">M2 Barbearia</span>
+        </div>
+        <h1>Fluxograma Operacional de Ponta a Ponta</h1>
+        <p class="subtitle">Agendamento, Automação por Horário, QR Code Individual na Cadeira e Frente de Caixa</p>
+      </div>
+      <div class="actions-bar">
+        <button class="btn" onclick="window.print()">
+          <span>🖨️ Imprimir / Salvar PDF</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid-stages">
+      <div class="stage-card">
+        <div class="num">Fase 1</div>
+        <h3>Confirmação Prévia</h3>
+        <p>Entrada de agendamento com disparo automático de WhatsApp. Opção direta de cancelamento pelo cliente ou barbeiro com liberação imediata da grade.</p>
+      </div>
+      <div class="stage-card">
+        <div class="num">Fase 2</div>
+        <h3>Entrada Automática</h3>
+        <p>Bateu o horário agendado, o sistema muda o status para "Em Atendimento" automaticamente, sem necessidade de intervenção manual.</p>
+      </div>
+      <div class="stage-card">
+        <div class="num">Fase 3</div>
+        <h3>QR Code na Cadeira</h3>
+        <p>Apresentado no display acrílico fixo na bancada ou na tela do celular do barbeiro com link exclusivo para avaliação 5 estrelas no Google.</p>
+      </div>
+      <div class="stage-card">
+        <div class="num">Fase 4</div>
+        <h3>Baixa no Caixa & Pós-Venda</h3>
+        <p>Seleção do método recebido com identificador de qual conta PIX foi paga. Lançamento contábil e régua automática de WhatsApp aos +30 min.</p>
+      </div>
+    </div>
+
+    <div class="diagram-wrapper">
+      <div class="diagram-header">
+        <h2>Mapa Visual do Fluxo</h2>
+        <div class="diagram-legend">
+          <div class="legend-item"><span class="legend-dot" style="background: #3B82F6;"></span> Automação por Horário</div>
+          <div class="legend-item"><span class="legend-dot" style="background: #DC2626;"></span> Ação na Cadeira / Barbeiro</div>
+          <div class="legend-item"><span class="legend-dot" style="background: #D97706;"></span> Operação de Caixa</div>
+          <div class="legend-item"><span class="legend-dot" style="background: #14B8A6;"></span> Disparos WhatsApp</div>
+          <div class="legend-item"><span class="legend-dot" style="background: #10B981;"></span> Sucesso / Conclusão</div>
+        </div>
+      </div>
+
+      <div class="mermaid">
+flowchart TD
+    classDef autoState fill:#172554,stroke:#3B82F6,stroke-width:2px,color:#FFFFFF;
+    classDef manualAction fill:#1F2124,stroke:#D97706,stroke-width:1px,color:#FFFFFF;
+    classDef chairAction fill:#1F2124,stroke:#DC2626,stroke-width:1px,color:#FFFFFF;
+    classDef clientAction fill:#1F2124,stroke:#374151,stroke-width:1px,color:#FFFFFF;
+    classDef decision fill:#2A2D32,stroke:#F59E0B,stroke-width:1px,color:#FFFFFF;
+    classDef cancelled fill:#450A0A,stroke:#EF4444,stroke-width:2px,color:#FFFFFF;
+    classDef success fill:#052E16,stroke:#16A34A,stroke-width:2px,color:#FFFFFF;
+    classDef autoMsg fill:#134E4A,stroke:#14B8A6,stroke-width:1px,color:#FFFFFF;
+
+    subgraph ETAPA1 ["1. Agendamento & Confirmação Prévia"]
+        A[Cliente Agenda: Online, Recepção ou WhatsApp] --> B["Status: AGENDADO"]
+        B --> C["WhatsApp Automático: Confirmação de Presença"]
+        
+        C --> D{Cliente confirmou ou cancelou?}
+        D -->|Cancelou / No-Show| E["Botão Cancelar (Cliente via link ou Barbeiro)"]
+        E --> Z_CANC["Status: CANCELADO (Horário Liberado)"]
+    end
+
+    subgraph ETAPA2 ["2. Cadeira & QR Code Individual do Barbeiro"]
+        D -->|Confirmado / Horário Atingido| F["Automação: Bateu o horário ➔ Status: EM ATENDIMENTO"]
+        
+        F --> G[Barbeiro executa o corte / barba / química]
+        G --> H{Como o Barbeiro apresenta o QR Code?}
+        
+        H -->|Opção A| I1["Display Acrílico Individual Fixo na Bancada/Mesa"]
+        H -->|Opção B| I2["Tela do Próprio Celular do Barbeiro"]
+        
+        I1 --> J["QR Code com Link Exclusivo do Barbeiro"]
+        I2 --> J
+        
+        J --> K["Cliente escaneia na cadeira ➔ Avaliação 5★ Google"]
+        K --> L[Cliente se dirige ao Balcão / Caixa]
+    end
+
+    subgraph ETAPA3 ["3. Balcão / Caixa & Recebimento"]
+        L --> M[Atendente ou Barbeiro abre o atendimento no painel]
+        M --> N{Qual a forma de pagamento utilizada?}
+        
+        N -->|PIX| O1["Seleção de Conta PIX Destino (Chave Loja, Gestor ou Barbeiro)"]
+        N -->|Cartão de Crédito| O2["Cartão de Crédito na Maquininha"]
+        N -->|Cartão de Débito| O3["Cartão de Débito na Maquininha"]
+        N -->|Dinheiro| O4["Dinheiro em Espécie (Troco)"]
+        
+        O1 --> P["Operador Clica: Confirmar Baixa do Valor"]
+        O2 --> P
+        O3 --> P
+        O4 --> P
+    end
+
+    subgraph ETAPA4 ["4. Fechamento de Caixa & Régua Automática"]
+        P --> Q["Status: PAGO / FINALIZADO"]
+        Q --> R["Lançamento Automático no Caixa do Dia & Comissões"]
+        
+        Q --> S["Temporizador Automático: +30 minutos"]
+        S --> T["WhatsApp Automático: Agradecimento, Link M2 e Fidelidade"]
+        T --> U([Ciclo Completo Finalizado com Sucesso])
+    end
+
+    class B,F autoState;
+    class E,M,P manualAction;
+    class G,I1,I2,J chairAction;
+    class A,K,L clientAction;
+    class D,H,N decision;
+    class Z_CANC cancelled;
+    class Q,R,U success;
+    class C,S,T autoMsg;
+      </div>
+    </div>
+
+    <h2>Regras de Negócio e Responsabilidades</h2>
+    <div style="margin-top: 14px; overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Etapa</th>
+            <th>Gatilho / Responsável</th>
+            <th>Ação Operacional</th>
+            <th>Regra de Negócio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Agendamento</strong></td>
+            <td>Cliente / Recepção</td>
+            <td>Criação do agendamento</td>
+            <td>Horário fica bloqueado no sistema sob status <code>AGENDADO</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Confirmação Prévia</strong></td>
+            <td>WhatsApp Automático</td>
+            <td>Disparo de lembrete com link</td>
+            <td>Pergunta se o cliente vai comparecer, dando botão de cancelamento imediato.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Cancelamento</strong></td>
+            <td>Cliente ou Barbeiro</td>
+            <td>Clique no botão de cancelamento</td>
+            <td>Muda status para <code>CANCELADO</code> e reabre imediatamente a vaga na agenda pública.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Início do Corte</strong></td>
+            <td><strong>Automação por Horário</strong></td>
+            <td>Transição automática de status</td>
+            <td>Ao bater a hora agendada (ex: 14:00), o sistema muda sozinho para <code>EM ATENDIMENTO</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>5. QR Code na Cadeira</strong></td>
+            <td>Barbeiro na Bancada</td>
+            <td>Apresentação do QR Code (Mesa ou Celular)</td>
+            <td>O cliente avalia com 5 estrelas no Google e conecta seu WhatsApp enquanto ainda está na cadeira.</td>
+          </tr>
+          <tr>
+            <td><strong>6. Baixa no Caixa</strong></td>
+            <td>Atendente ou Barbeiro</td>
+            <td>Seleção da forma de recebimento</td>
+            <td>Suporta seleção de qual conta PIX recebeu, além de Cartão de Crédito, Débito e Dinheiro.</td>
+          </tr>
+          <tr>
+            <td><strong>7. Fechamento de Caixa</strong></td>
+            <td><strong>Sistema Automático</strong></td>
+            <td>Lançamento no relatório financeiro</td>
+            <td>Contabiliza o valor imediatamente no caixa do dia discriminado por forma de pagamento e profissional.</td>
+          </tr>
+          <tr>
+            <td><strong>8. Régua Pós-Corte</strong></td>
+            <td><strong>Automação de WhatsApp (+30 min)</strong></td>
+            <td>Disparo de mensagem de agradecimento</td>
+            <td>30 minutos após o pagamento, o cliente recebe agradecimento e link para agendamento do próximo retorno.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      Documentação Técnica de Engenharia de Processos — M2 Barbearia &copy; 2026. Todos os direitos reservados.
+    </footer>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      securityLevel: 'loose',
+      fontFamily: 'Inter, sans-serif',
+      themeVariables: {
+        darkMode: true,
+        background: '#17181A',
+        primaryColor: '#1F2124',
+        primaryTextColor: '#FFFFFF',
+        primaryBorderColor: '#374151',
+        lineColor: '#6B7280',
+        secondaryColor: '#2A2D32',
+        tertiaryColor: '#17181A'
+      }
+    });
+  </script>
+</body>
+</html>
