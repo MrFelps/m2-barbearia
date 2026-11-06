@@ -17,6 +17,7 @@ import { ViewSwitcherBar, AppView } from './components/ViewSwitcherBar';
 import { BarberChairDisplay } from './components/station/BarberChairDisplay';
 import { CashierDashboard } from './components/pos/CashierDashboard';
 import { CustomerPostServiceView } from './components/pos/CustomerPostServiceView';
+import { M2Logo } from './components/M2Logo';
 import { BARBER_STATIONS } from './data/stationData';
 import { BarberStation } from './types/station';
 import { useHeaderState } from './hooks/useHeaderState';
@@ -64,9 +65,34 @@ export const App: React.FC = () => {
   const showAdjuster = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('ajuste');
 
   return (
-    <div className="min-h-screen bg-ink text-white flex flex-col relative selection:bg-brand-red selection:text-white">
+    <div className="min-h-screen bg-ink text-white flex flex-col relative selection:bg-brand-red selection:text-white pb-16">
       <BrandBar fixed />
+
+      {/* Floating dock for quick view switching without colliding with header */}
       <ViewSwitcherBar activeView={activeView} onSelectView={setActiveView} />
+
+      {/* Operational Header for Bancada and Caixa views */}
+      {activeView !== 'home' && activeView !== 'cliente' && (
+        <header className="bg-surface/90 border-b border-border-subtle py-3 px-4 pt-4">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <M2Logo size={34} />
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-white">M2 Barbearia</span>
+                <span className="text-[10px] text-gray-400 block -mt-0.5">
+                  {activeView === 'bancada' ? 'Display & QR Code da Cadeira' : 'Frente de Caixa & Baixa'}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => setActiveView('home')}
+              className="text-xs text-gray-300 hover:text-white px-3 py-1.5 rounded-lg border border-border-subtle bg-ink min-h-[44px] flex items-center"
+            >
+              ← Voltar ao Site
+            </button>
+          </div>
+        </header>
+      )}
 
       {activeView === 'home' && (
         <>
