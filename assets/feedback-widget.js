@@ -1,6 +1,7 @@
 /**
  * M2 Barbearia — Visual Feedback & Annotation Engine (Maquininha de Comentários no Front)
  * Permite clicar ou arrastar uma caixa na tela para deixar comentários de revisão visual.
+ * Inclui exportação e importação de arquivo JSON para colaboração sem banco de dados.
  */
 (function () {
   const STORAGE_KEY = 'm2_feedback_annotations_v1';
@@ -8,7 +9,6 @@
   let isDrawing = false;
   let startX = 0;
   let startY = 0;
-  let currentBox = null;
   let pendingAnnotation = null;
 
   // Carrega comentários do LocalStorage
@@ -23,7 +23,7 @@
   function saveComments(comments) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
     renderAnnotations();
-    updateBadge();
+    updateUIControls();
   }
 
   function getCurrentTab() {
@@ -46,12 +46,54 @@
   const style = document.createElement('style');
   style.id = 'm2-feedback-styles';
   style.textContent = `
-    /* Botão flutuante no canto inferior direito */
-    .m2-fb-trigger-btn {
+    /* Barra flutuante de ferramentas no canto inferior direito */
+    .m2-fb-toolbar {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
       z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    /* Botão circular de ação secundária (Download, Upload, Lista) */
+    .m2-fb-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #17181A;
+      border: 1px solid #374151;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .m2-fb-circle-btn:hover {
+      background: #25282C;
+      border-color: #6B7280;
+      transform: translateY(-2px);
+    }
+
+    .m2-fb-circle-btn.has-comments {
+      border-color: #10B981;
+      color: #34D399;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .m2-fb-circle-btn.has-comments:hover {
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    /* Botão principal de ativar o modo comentar */
+    .m2-fb-trigger-btn {
       background: #17181A;
       color: #FFFFFF;
       border: 2px solid #DC2626;
@@ -66,7 +108,7 @@
       gap: 8px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(220, 38, 38, 0.4);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
+      min-height: 44px;
     }
 
     .m2-fb-trigger-btn:hover {
@@ -323,12 +365,25 @@
   const widgetContainer = document.createElement('div');
   widgetContainer.id = 'm2-feedback-widget-root';
   widgetContainer.innerHTML = `
-    <!-- Botão Principal no Canto Inferior Direito -->
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; display: flex; gap: 8px; align-items: center;">
-      <button id="m2-fb-list-btn" title="Ver Lista de Comentários" style="width: 44px; height: 44px; border-radius: 50%; background: #17181A; border: 1px solid #374151; color: #FFF; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.7); font-size: 16px;">
+    <!-- Barra Flutuante de Ferramentas no Canto Inferior Direito -->
+    <div class="m2-fb-toolbar">
+      <!-- Botão Circular de Importar (Carregar comentários do João) -->
+      <button id="m2-fb-import-btn" class="m2-fb-circle-btn" title="Carregar Comentários do João (.json)">
+        📂
+      </button>
+      <input type="file" id="m2-fb-file-input" accept=".json" style="display: none;">
+
+      <!-- Botão Circular de Download (Baixar comentários para mandar) -->
+      <button id="m2-fb-download-btn" class="m2-fb-circle-btn" title="Baixar Meus Comentários (.json)">
+        📥
+      </button>
+
+      <!-- Botão Circular de Lista de Comentários -->
+      <button id="m2-fb-list-btn" class="m2-fb-circle-btn" title="Ver Lista de Comentários">
         📝
       </button>
 
+      <!-- Botão Principal de Ativação do Modo Comentar -->
       <button id="m2-fb-toggle-btn" class="m2-fb-trigger-btn">
         <span style="font-size: 16px;">💬</span>
         <span id="m2-fb-btn-text">Comentar</span>
@@ -372,6 +427,9 @@
       <div id="m2-fb-drawer-list" class="m2-fb-drawer-list"></div>
 
       <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #2D3139; padding-top: 14px;">
+        <button id="m2-fb-download-drawer" style="background: #10B981; color: #FFF; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          📥 Baixar Arquivo .JSON de Comentários
+        </button>
         <button id="m2-fb-copy-all" style="background: #25D366; color: #FFF; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
           📋 Copiar Todos para WhatsApp
         </button>
@@ -398,6 +456,10 @@
   const btnSave = document.getElementById('m2-fb-btn-save');
   const btnCancel = document.getElementById('m2-fb-btn-cancel');
   const listBtn = document.getElementById('m2-fb-list-btn');
+  const downloadBtn = document.getElementById('m2-fb-download-btn');
+  const downloadDrawerBtn = document.getElementById('m2-fb-download-drawer');
+  const importBtn = document.getElementById('m2-fb-import-btn');
+  const fileInput = document.getElementById('m2-fb-file-input');
   const drawer = document.getElementById('m2-fb-drawer');
   const drawerClose = document.getElementById('m2-fb-drawer-close');
   const drawerList = document.getElementById('m2-fb-drawer-list');
@@ -480,7 +542,7 @@
     const left = Math.min(startX, endX);
     const top = Math.min(startY, endY);
 
-    // Se o arraste foi menor que 10px, considera um clique pontual (PIN)
+    // Se o arraste foi menor que 15px, considera um clique pontual (PIN)
     const isBox = width > 15 && height > 15;
 
     pendingAnnotation = {
@@ -501,7 +563,6 @@
   function openPopover(x, y) {
     popover.style.display = 'block';
 
-    // Ajusta coordenadas para não vazar a tela
     const popoverWidth = 320;
     const maxX = window.innerWidth + window.scrollX - popoverWidth - 20;
     const adjustedX = Math.max(20, Math.min(x - popoverWidth / 2, maxX));
@@ -533,7 +594,7 @@
     const newComment = {
       id: 'c_' + Date.now(),
       number: comments.length + 1,
-      author: authorInput.value.trim() || 'Usuário',
+      author: authorInput.value.trim() || 'João',
       comment: text,
       isBox: pendingAnnotation.isBox,
       x: pendingAnnotation.x,
@@ -557,11 +618,9 @@
     const currentTab = getCurrentTab();
 
     comments.forEach((c) => {
-      // Exibe os marcadores correspondentes à aba atual ou se não houver abas
       if (c.tab && c.tab !== currentTab) return;
 
       if (c.isBox) {
-        // Caixa retangular (Bounding Box)
         const box = document.createElement('div');
         box.className = 'm2-fb-box-marker';
         box.style.left = c.x + 'px';
@@ -576,7 +635,6 @@
         });
         markersLayer.appendChild(box);
       } else {
-        // Pino pontual (PIN)
         const pin = document.createElement('div');
         pin.className = 'm2-fb-pin';
         pin.style.left = c.x + 'px';
@@ -593,18 +651,119 @@
   }
 
   function showCommentDetails(c) {
-    alert(`Comentário #${c.number} (${c.author}) em [${c.tabName}]:\n\n"${c.comment}"\n\nCriado às ${c.createdAt}`);
+    alert(`Comentário #${c.number} (${c.author}) em [${c.tabName}]:\n\n"${c.comment}"\n\nRegistrado às ${c.createdAt}`);
   }
 
-  function updateBadge() {
+  function updateUIControls() {
     const comments = getComments();
     if (comments.length > 0) {
       countBadge.innerText = comments.length;
       countBadge.style.display = 'inline-block';
+      downloadBtn.classList.add('has-comments');
+      downloadBtn.title = `Baixar ${comments.length} Comentários (.json)`;
     } else {
       countBadge.style.display = 'none';
+      downloadBtn.classList.remove('has-comments');
+      downloadBtn.title = 'Nenhum comentário para baixar ainda';
     }
   }
+
+  // EXPORTAÇÃO: BAIXAR ARQUIVO JSON
+  function downloadCommentsJSON() {
+    const comments = getComments();
+    if (comments.length === 0) {
+      alert('Nenhum comentário adicionado ainda para baixar. Clique em "Comentar" para criar um!');
+      return;
+    }
+
+    const payload = {
+      project: 'M2 Barbearia — Revisão Visual',
+      exportDate: new Date().toISOString(),
+      totalComments: comments.length,
+      author: comments[comments.length - 1].author || 'João',
+      annotations: comments,
+    };
+
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(payload, null, 2));
+    const downloadAnchor = document.createElement('a');
+    const filename = `m2-comentarios-${payload.author.toLowerCase().replace(/[^a-z0-9]/g, '_')}-${Date.now().toString().slice(-4)}.json`;
+
+    downloadAnchor.setAttribute('href', dataStr);
+    downloadAnchor.setAttribute('download', filename);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+
+    alert(`Arquivo baixado com sucesso!\n\nEnvie o arquivo "${filename}" no WhatsApp para que ele possa carregar e ver cada comentário nas coordenadas exatas!`);
+  }
+
+  downloadBtn.addEventListener('click', downloadCommentsJSON);
+  downloadDrawerBtn.addEventListener('click', downloadCommentsJSON);
+
+  // IMPORTAÇÃO: CARREGAR ARQUIVO JSON DO JOÃO
+  importBtn.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      try {
+        const parsed = JSON.parse(event.target.result);
+        const importedComments = parsed.annotations || (Array.isArray(parsed) ? parsed : null);
+
+        if (!importedComments || !Array.isArray(importedComments)) {
+          alert('Arquivo inválido. O arquivo JSON não contém anotações válidas.');
+          return;
+        }
+
+        const existing = getComments();
+        let finalComments = importedComments;
+
+        if (existing.length > 0) {
+          if (confirm(`Você já possui ${existing.length} comentários na tela. Deseja substituir pelos ${importedComments.length} comentários do arquivo importado?\n\n[OK = Substituir]  [Cancelar = Juntar ambos]`)) {
+            finalComments = importedComments;
+          } else {
+            finalComments = existing.concat(importedComments);
+          }
+        }
+
+        // Renumera
+        finalComments.forEach((c, idx) => (c.number = idx + 1));
+        saveComments(finalComments);
+        alert(`Sucesso! ${importedComments.length} comentários importados com sucesso!\nTodas as coordenadas e marcações foram carregadas na tela.`);
+      } catch (err) {
+        alert('Erro ao ler arquivo JSON: ' + err.message);
+      }
+      fileInput.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // DRAG AND DROP: Permite arrastar o arquivo JSON direto para a tela
+  window.addEventListener('dragover', (e) => e.preventDefault());
+  window.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.json')) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          const importedComments = parsed.annotations || (Array.isArray(parsed) ? parsed : null);
+          if (importedComments && Array.isArray(importedComments)) {
+            importedComments.forEach((c, idx) => (c.number = idx + 1));
+            saveComments(importedComments);
+            alert(`Arquivo "${file.name}" carregado!\n${importedComments.length} comentários posicionados nas coordenadas.`);
+          }
+        } catch {}
+      };
+      reader.readAsText(file);
+    }
+  });
 
   // Monitora mudança de abas no app para re-renderizar os marcadores da aba ativa
   const observer = new MutationObserver(() => {
@@ -652,7 +811,6 @@
     if (confirm('Deseja excluir este comentário?')) {
       let comments = getComments();
       comments = comments.filter((c) => c.id !== id);
-      // Renumera
       comments.forEach((c, idx) => (c.number = idx + 1));
       saveComments(comments);
       renderDrawer();
@@ -684,5 +842,5 @@
 
   // Inicialização
   renderAnnotations();
-  updateBadge();
+  updateUIControls();
 })();
