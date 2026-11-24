@@ -75,7 +75,7 @@ export const SimulatorHeroAdjusterDrawer: React.FC<SimulatorHeroAdjusterDrawerPr
 
       {/* Conteúdo da Aba Selecionada */}
       {activeTab === 'barber' && (
-        <AdjusterBarberTab settings={settings} onUpdate={onUpdate} onReset={onReset} />
+        <AdjusterBarberTab settings={settings} mode="mobile" onUpdate={onUpdate} onReset={onReset} />
       )}
       {activeTab === 'text' && (
         <AdjusterTextTab settings={settings} onUpdate={onUpdate} />

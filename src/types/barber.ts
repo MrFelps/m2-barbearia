@@ -21,6 +21,13 @@ export interface HeroImageSettings {
   whatsappXOffset?: number; // in pixels, e.g. 0
   whatsappYOffset?: number; // in pixels, e.g. 0
   whatsappScale?: number; // in percentage, e.g. 100
+
+  // 5. Ajustes Específicos para Desktop / Monitor de PC
+  desktopScale?: number; // in percentage, e.g. 100
+  desktopXOffset?: number; // in pixels, e.g. 0
+  desktopYOffset?: number; // in pixels, e.g. 0
+  desktopTextYOffset?: number; // in pixels, e.g. 0
+  desktopButtonsYOffset?: number; // in pixels, e.g. 0
 }
 
 export interface BarberProfile {

@@ -30,14 +30,14 @@ export const HeroImageAdjuster: React.FC<HeroImageAdjusterProps> = ({
   const [activeTab, setActiveTab] = useState<AdjustTarget>('barber');
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-20 left-3 sm:left-6 z-50">
       {!isOpen && (
         <button
           onClick={onToggle}
-          className="h-11 min-h-[44px] px-4 bg-ink-elevated hover:bg-neutral-800 text-neutral-200 border border-neutral-700 shadow-2xl rounded-sm flex items-center gap-2 text-xs font-display uppercase tracking-widest transition-all"
+          className="h-11 min-h-[44px] px-4 bg-ink-elevated/95 backdrop-blur-md hover:bg-neutral-800 text-neutral-200 border border-neutral-700 shadow-2xl rounded-full flex items-center gap-2 text-xs font-display uppercase tracking-widest transition-all"
         >
           <Sliders className="w-4 h-4 text-brand-red" />
-          <span>Diagramar Hero</span>
+          <span>Ajustar Barbeiro</span>
         </button>
       )}
 
@@ -81,7 +81,7 @@ export const HeroImageAdjuster: React.FC<HeroImageAdjusterProps> = ({
           </div>
 
           {activeTab === 'barber' && (
-            <AdjusterBarberTab settings={settings} onUpdate={onUpdate} onReset={onReset} />
+            <AdjusterBarberTab settings={settings} mode="desktop" onUpdate={onUpdate} onReset={onReset} />
           )}
           {activeTab === 'text' && (
             <AdjusterTextTab settings={settings} onUpdate={onUpdate} />

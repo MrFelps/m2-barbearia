@@ -100,6 +100,8 @@ export const App: React.FC = () => {
         onSelectView={setActiveView}
         isSimulatorActive={simulator.isActive}
         onToggleSimulator={simulator.toggleSimulator}
+        onToggleAdjuster={() => setIsAdjusterOpen((prev) => !prev)}
+        isAdjusterOpen={isAdjusterOpen}
       />
 
       {/* Modo Simulador Mobile Ativo com Chassi Físico */}

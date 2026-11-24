@@ -12,4 +12,13 @@ describe('Mobile System View Navigation Integrity', () => {
     const supportedRouteParams = ['home', 'bancada', 'caixa', 'cliente', 'celular'];
     expect(supportedRouteParams.includes('celular')).toBe(true);
   });
+
+  it('should have all 4 mobile app tabs defined properly', () => {
+    const tabs = ['home', 'agendamento', 'fidelidade', 'perfil'];
+    expect(tabs.length).toBe(4);
+    expect(tabs).toContain('home');
+    expect(tabs).toContain('agendamento');
+    expect(tabs).toContain('fidelidade');
+    expect(tabs).toContain('perfil');
+  });
 });

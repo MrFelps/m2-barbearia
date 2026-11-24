@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { MobileDrawer } from './MobileDrawer';
 import { BarberHeroSection } from './BarberHeroSection';
 import { BrandBar } from './BrandBar';
+import { PromoBanner } from './PromoBanner';
 import { BarberQualificationsSection } from './BarberQualificationsSection';
 import { ServicesSection } from './ServicesSection';
 import { ExperienceShowcase } from './ExperienceShowcase';
@@ -85,6 +86,10 @@ export const AppContent: React.FC<AppContentProps> = ({
           <MobileDrawer isOpen={isMobileMenuOpen} onClose={onCloseMobileMenu} />
           <main className="flex-1">
             <BarberHeroSection imageSettings={imageSettings} />
+            <div className="hidden sm:block">
+              <BrandBar />
+              <PromoBanner />
+            </div>
             <BarberQualificationsSection />
             <ServicesSection />
             <ExperienceShowcase />

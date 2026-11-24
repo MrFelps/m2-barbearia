@@ -1,24 +1,44 @@
 import { useState, useEffect } from 'react';
 import { HeroImageSettings } from '../types/barber';
+import savedHeroSettings from '../data/savedHeroSettings.json';
 
 const STORAGE_KEY = 'm2_hero_image_settings';
 
+const syncToServer = (data: HeroImageSettings) => {
+  try {
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      fetch('/api/sync-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }).catch(() => {});
+    }
+  } catch {
+    // ignore
+  }
+};
+
 export const DEFAULT_HERO_SETTINGS: HeroImageSettings = {
-  scale: 100,
-  xOffset: 10,
-  yOffset: -40,
+  scale: 118,
+  xOffset: -13,
+  yOffset: -234,
   zIndex: 10,
   opacity: 100,
-  brightness: 105,
+  brightness: 107,
   contrast: 105,
-  textYOffset: 0,
-  textScale: 100,
+  textYOffset: 150,
+  textScale: 108,
   textBackdropOpacity: 65,
-  buttonsYOffset: 0,
-  buttonsScale: 100,
-  whatsappXOffset: 0,
-  whatsappYOffset: 0,
-  whatsappScale: 100,
+  buttonsYOffset: 115,
+  buttonsScale: 102,
+  whatsappXOffset: 10,
+  whatsappYOffset: 20,
+  whatsappScale: 85,
+  desktopScale: 100,
+  desktopXOffset: 0,
+  desktopYOffset: 0,
+  desktopTextYOffset: 0,
+  desktopButtonsYOffset: 0,
 };
 
 export function useHeroAdjuster() {
@@ -26,6 +46,9 @@ export function useHeroAdjuster() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return { ...DEFAULT_HERO_SETTINGS, ...JSON.parse(saved) };
+      if (savedHeroSettings && Object.keys(savedHeroSettings).length > 0) {
+        return { ...DEFAULT_HERO_SETTINGS, ...(savedHeroSettings as Partial<HeroImageSettings>) };
+      }
     } catch {
       // fallback to default
     }
@@ -37,9 +60,11 @@ export function useHeroAdjuster() {
 
   // Escuta atualizações vindas do simulador mobile em tempo real
   useEffect(() => {
+    syncToServer(settings);
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type === 'M2_HERO_IMAGE_UPDATE' && event.data.settings) {
         setSettings(event.data.settings);
+        syncToServer(event.data.settings);
       }
     };
     window.addEventListener('message', handleMessage);
@@ -47,13 +72,18 @@ export function useHeroAdjuster() {
   }, []);
 
   const updateSetting = <K extends keyof HeroImageSettings>(key: K, value: HeroImageSettings[K]) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
+    setSettings((prev) => {
+      const next = { ...prev, [key]: value };
+      syncToServer(next);
+      return next;
+    });
     setIsSaved(false);
   };
 
   const saveSettings = () => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+      syncToServer(settings);
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 2500);
     } catch {
