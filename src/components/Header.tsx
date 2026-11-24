@@ -18,25 +18,25 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className={`fixed top-1 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-ink/95 backdrop-blur-md border-b border-neutral-800/80 py-3 shadow-xl'
-          : 'bg-transparent py-5'
+          ? 'bg-ink/95 backdrop-blur-md border-b border-neutral-800/80 py-2.5 sm:py-3 shadow-xl'
+          : 'bg-transparent py-3 sm:py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo & Professional Name */}
-        <a href="#hero" className="flex items-center gap-3 group focus:outline-none">
-          <M2Logo size={42} />
-          <div className="flex flex-col">
-            <span className="font-display uppercase tracking-[0.2em] font-bold text-base sm:text-lg text-white">
+        <a href="#hero" className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none min-w-0">
+          <M2Logo size={36} />
+          <div className="flex flex-col truncate">
+            <span className="font-display uppercase tracking-[0.18em] sm:tracking-[0.2em] font-bold text-sm sm:text-lg text-white truncate">
               {BARBER_PROFILE.name}
             </span>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-textFaint">
+            <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.22em] text-textFaint">
               M2 Barbearia • Portfólio
             </span>
           </div>
         </a>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation (Oculto estritamente no Mobile) */}
         <nav className="hidden lg:flex items-center gap-7">
           <a href="#qualificacoes" className="text-xs uppercase tracking-[0.18em] text-textDim hover:text-white transition-colors">
             Perfil
@@ -56,12 +56,12 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Action & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
             href="https://sites.appbarber.com.br/m2barbearia-7nna"
             target="_blank"
             rel="noopener noreferrer"
-            className="h-11 min-h-[44px] px-6 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.2em] font-semibold flex items-center justify-center transition-all shadow-md shadow-red-950/40 rounded-sm"
+            className="hidden sm:flex h-11 min-h-[44px] px-4 sm:px-6 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-[11px] sm:text-xs tracking-[0.2em] font-semibold items-center justify-center transition-all shadow-md shadow-red-950/40 rounded-sm"
           >
             Agendar
           </a>

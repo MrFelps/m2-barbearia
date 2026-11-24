@@ -4,6 +4,15 @@
  * Inclui exportação e importação de arquivo JSON para colaboração sem banco de dados.
  */
 (function () {
+  // Não inicializa dentro do iframe do simulador de celular
+  if (typeof window !== 'undefined') {
+    const isInsideIframe = window !== window.top || window.self !== window.top;
+    const isSimEmbedded = new URLSearchParams(window.location.search).has('sim_embed');
+    if (isInsideIframe || isSimEmbedded) {
+      return;
+    }
+  }
+
   const STORAGE_KEY = 'm2_feedback_annotations_v1';
   let isAnnotationMode = false;
   let isDrawing = false;

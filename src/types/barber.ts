@@ -1,9 +1,20 @@
 export interface HeroImageSettings {
+  // 1. Ajuste do Barbeiro
   scale: number; // in percentage, e.g. 100
-  xOffset: number; // in pixels or %, e.g. 0
-  yOffset: number; // in pixels, e.g. 0
+  xOffset: number; // in pixels, e.g. 10
+  yOffset: number; // in pixels, e.g. -40
   zIndex: number; // 10 (behind text) or 30 (in front of text)
   opacity: number; // 20 to 100
+  brightness?: number; // 80 to 150, default 105
+  contrast?: number; // 90 to 140, default 105
+
+  // 2. Ajuste do Texto Central
+  textYOffset?: number; // in pixels, e.g. 0
+  textScale?: number; // in percentage, e.g. 100
+  textBackdropOpacity?: number; // 0 to 100, default 65
+
+  // 3. Ajuste dos Botões de Agendamento
+  buttonsYOffset?: number; // in pixels, e.g. 0
 }
 
 export interface BarberProfile {
