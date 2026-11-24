@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { User, Type, MousePointerClick, Check, X } from 'lucide-react';
+import { User, Type, MousePointerClick, MessageCircle, Check, X } from 'lucide-react';
 import { HeroImageSettings } from '../../types/barber';
 import { AdjusterBarberTab } from '../adjuster/AdjusterBarberTab';
 import { AdjusterTextTab } from '../adjuster/AdjusterTextTab';
 import { AdjusterButtonsTab } from '../adjuster/AdjusterButtonsTab';
+import { AdjusterWhatsAppTab } from '../adjuster/AdjusterWhatsAppTab';
 
-type AdjustTarget = 'barber' | 'text' | 'buttons';
+type AdjustTarget = 'barber' | 'text' | 'buttons' | 'whatsapp';
 
 interface SimulatorHeroAdjusterDrawerProps {
   isOpen: boolean;
@@ -46,12 +47,13 @@ export const SimulatorHeroAdjusterDrawer: React.FC<SimulatorHeroAdjusterDrawerPr
         </button>
       </div>
 
-      {/* As 3 Abas Solicitadas */}
-      <div className="grid grid-cols-3 gap-1 p-1 bg-ink rounded-lg border border-neutral-800">
+      {/* As 4 Abas Solicitadas */}
+      <div className="grid grid-cols-4 gap-1 p-1 bg-ink rounded-lg border border-neutral-800">
         {[
           { id: 'barber', label: 'Barbeiro', icon: User },
           { id: 'text', label: 'Texto', icon: Type },
           { id: 'buttons', label: 'Botões', icon: MousePointerClick },
+          { id: 'whatsapp', label: 'Whats', icon: MessageCircle },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -60,7 +62,7 @@ export const SimulatorHeroAdjusterDrawer: React.FC<SimulatorHeroAdjusterDrawerPr
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id as AdjustTarget)}
-              className={`py-1.5 rounded text-[11px] font-display uppercase tracking-wider font-semibold flex items-center justify-center gap-1 transition-colors min-h-[44px] ${
+              className={`py-1.5 rounded text-[10px] font-display uppercase tracking-wider font-semibold flex flex-col sm:flex-row items-center justify-center gap-1 transition-colors min-h-[44px] ${
                 isActive ? 'bg-brand-red text-white shadow-md' : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -80,6 +82,9 @@ export const SimulatorHeroAdjusterDrawer: React.FC<SimulatorHeroAdjusterDrawerPr
       )}
       {activeTab === 'buttons' && (
         <AdjusterButtonsTab settings={settings} onUpdate={onUpdate} />
+      )}
+      {activeTab === 'whatsapp' && (
+        <AdjusterWhatsAppTab settings={settings} onUpdate={onUpdate} />
       )}
 
       {/* Gravar Diagramação no Celular */}

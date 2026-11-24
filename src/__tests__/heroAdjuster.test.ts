@@ -12,6 +12,10 @@ describe('Hero Visual Diagramming & Adjuster Settings', () => {
     expect(DEFAULT_HERO_SETTINGS.textYOffset).toBe(0);
     expect(DEFAULT_HERO_SETTINGS.textScale).toBe(100);
     expect(DEFAULT_HERO_SETTINGS.buttonsYOffset).toBe(0);
+    expect(DEFAULT_HERO_SETTINGS.buttonsScale).toBe(100);
+    expect(DEFAULT_HERO_SETTINGS.whatsappXOffset).toBe(0);
+    expect(DEFAULT_HERO_SETTINGS.whatsappYOffset).toBe(0);
+    expect(DEFAULT_HERO_SETTINGS.whatsappScale).toBe(100);
   });
 
   it('deve conter configurações de iluminação e evidência do barbeiro sem deixá-lo fosco', () => {

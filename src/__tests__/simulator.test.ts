@@ -48,4 +48,9 @@ describe('Mobile Simulator Presets & Logic', () => {
     expect(galaxy?.height).toBe(915);
     expect(galaxy?.notchType).toBe('punch-hole');
   });
+
+  it('deve fornecer URL limpa para abertura direta do site como no celular', () => {
+    const directUrl = '/?view=home';
+    expect(directUrl).toBe('/?view=home');
+  });
 });

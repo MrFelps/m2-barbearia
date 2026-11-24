@@ -15,6 +15,10 @@ export const DEFAULT_HERO_SETTINGS: HeroImageSettings = {
   textScale: 100,
   textBackdropOpacity: 65,
   buttonsYOffset: 0,
+  buttonsScale: 100,
+  whatsappXOffset: 0,
+  whatsappYOffset: 0,
+  whatsappScale: 100,
 };
 
 export function useHeroAdjuster() {

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta id="viewport-meta" name="viewport" content="width=1200, user-scalable=yes">
   <title>M2 Barbearia — Felipe Boccardo & Sistema Operacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -982,6 +982,17 @@
 
       if (viewName === 'caixa') {
         renderAppointments();
+      }
+
+      // Ajusta viewport dinamicamente: 1200px para o site (mantém proporção de PC no celular)
+      // e 1:1 apenas quando entra no módulo Celular
+      const meta = document.getElementById('viewport-meta') || document.querySelector('meta[name="viewport"]');
+      if (meta) {
+        if (viewName === 'celular') {
+          meta.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+        } else {
+          meta.setAttribute('content', 'width=1200, user-scalable=yes');
+        }
       }
     }
 

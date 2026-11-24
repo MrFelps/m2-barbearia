@@ -2,6 +2,8 @@ import React from 'react';
 import { Calendar, Star, ChevronDown, Award } from 'lucide-react';
 import { BARBER_PROFILE } from '../data/barberData';
 import { HeroImageSettings } from '../types/barber';
+import { BrandBar } from './BrandBar';
+import { PromoBanner } from './PromoBanner';
 
 interface BarberHeroSectionProps {
   imageSettings?: HeroImageSettings;
@@ -27,7 +29,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] sm:min-h-screen flex flex-col justify-between pt-20 sm:pt-28 md:pt-32 pb-6 sm:pb-12 bg-cover bg-center bg-no-repeat overflow-hidden"
+      className="relative min-h-[100dvh] sm:min-h-screen flex flex-col justify-between pt-16 sm:pt-28 md:pt-32 pb-0 bg-cover bg-center bg-no-repeat overflow-hidden"
       style={{
         backgroundImage: `
           radial-gradient(ellipse at 75% 50%, rgba(11,11,11,0.45) 0%, rgba(11,11,11,0.82) 65%, rgba(11,11,11,0.98) 100%),
@@ -117,7 +119,8 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         <div
           className="mt-16 sm:mt-24 md:mt-28 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto transition-transform duration-75"
           style={{
-            transform: `translateY(${currentSettings.buttonsYOffset || 0}px)`,
+            transform: `translateY(${currentSettings.buttonsYOffset || 0}px) scale(${(currentSettings.buttonsScale || 100) / 100})`,
+            transformOrigin: 'top center',
           }}
         >
           <a
@@ -152,7 +155,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       </div>
 
       {/* Rodapé da Hero Desktop (Oculto no mobile para desimpedir os botões) */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-6 sm:pt-8 border-t border-white/10 hidden sm:flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-textFaint relative z-20 text-center sm:text-left">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-4 pb-2 border-t border-white/10 hidden sm:flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-textFaint relative z-20 text-center sm:text-left">
         <span className="font-display tracking-[0.18em] uppercase text-[10px] sm:text-[11px]">
           Rua América do Sul, 57 • Santo André / SP
         </span>
@@ -169,9 +172,10 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         </span>
       </div>
 
-      {/* Indicador Mobile Discreto e Minimalista */}
-      <div className="sm:hidden w-full flex justify-center pb-2 pt-1 relative z-20 pointer-events-none">
-        <ChevronDown className="w-4 h-4 text-neutral-500 animate-bounce" />
+      {/* Traço Inferior e Exclusividade M2 no Chão / Borda Final do Celular */}
+      <div className="w-full relative z-20 mt-auto">
+        <BrandBar />
+        <PromoBanner />
       </div>
     </section>
   );

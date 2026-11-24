@@ -12,6 +12,7 @@ import { useHeaderState } from './hooks/useHeaderState';
 import { useBookingFlow } from './hooks/useBookingFlow';
 import { useHeroAdjuster } from './hooks/useHeroAdjuster';
 import { useMobileSimulator } from './hooks/useMobileSimulator';
+import { useAdaptiveViewport } from './hooks/useAdaptiveViewport';
 
 export const App: React.FC = () => {
   const [activeView, setActiveView] = useState<AppView>('home');
@@ -19,6 +20,7 @@ export const App: React.FC = () => {
   const { isScrolled, isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useHeaderState();
 
   const simulator = useMobileSimulator();
+  useAdaptiveViewport(activeView);
 
   const {
     isOpen: isBookingOpen,
@@ -109,6 +111,9 @@ export const App: React.FC = () => {
             scale={simulator.scale}
             showFrame={simulator.showFrame}
             isAdjusterOpen={isAdjusterOpen}
+            isSaved={isAdjusterSaved}
+            onSave={saveSettings}
+            onOpenDirectly={() => window.open('/?view=home', '_blank')}
             onSelectDevice={simulator.selectDevice}
             onToggleOrientation={simulator.toggleOrientation}
             onSetScale={simulator.setScale}
@@ -125,6 +130,9 @@ export const App: React.FC = () => {
             showFrame={simulator.showFrame}
             activeView={activeView}
             imageSettings={imageSettings}
+            isSaved={isAdjusterSaved}
+            onSave={saveSettings}
+            onOpenRealSite={() => window.open('/?view=home', '_blank')}
           />
 
           {/* Gaveta do Joystick Circular integrado ao Simulador Mobile */}

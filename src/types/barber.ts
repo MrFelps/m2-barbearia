@@ -15,6 +15,12 @@ export interface HeroImageSettings {
 
   // 3. Ajuste dos Botões de Agendamento
   buttonsYOffset?: number; // in pixels, e.g. 0
+  buttonsScale?: number; // in percentage, e.g. 100
+
+  // 4. Ajuste do WhatsApp Flutuante
+  whatsappXOffset?: number; // in pixels, e.g. 0
+  whatsappYOffset?: number; // in pixels, e.g. 0
+  whatsappScale?: number; // in percentage, e.g. 100
 }
 
 export interface BarberProfile {

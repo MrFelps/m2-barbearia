@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Check, ExternalLink } from 'lucide-react';
 import { DevicePreset } from '../../types/simulator';
 import { HeroImageSettings } from '../../types/barber';
 import { MobileStatusBar } from './MobileStatusBar';
@@ -10,6 +11,9 @@ interface MobileSimulatorFrameProps {
   showFrame: boolean;
   activeView: string;
   imageSettings?: HeroImageSettings;
+  isSaved?: boolean;
+  onSave?: () => void;
+  onOpenRealSite?: () => void;
 }
 
 export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
@@ -19,6 +23,9 @@ export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
   showFrame,
   activeView,
   imageSettings,
+  isSaved,
+  onSave,
+  onOpenRealSite,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const screenWidth = isLandscape ? device.height : device.width;
@@ -38,7 +45,7 @@ export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
   }, [imageSettings]);
 
   return (
-    <div className="w-full flex-1 flex flex-col items-center justify-start py-12 overflow-hidden relative select-none">
+    <div className="w-full flex-1 flex flex-col items-center justify-start py-8 pb-16 overflow-hidden relative select-none">
       {/* Grade de prancheta de design */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -106,6 +113,33 @@ export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Dock de Ações Rápidas por Fora do Celular */}
+      <div className="mt-5 flex items-center gap-2.5 z-30 bg-ink-elevated/95 backdrop-blur-md border border-neutral-700/80 px-4 py-2 rounded-2xl shadow-2xl">
+        {onSave && (
+          <button
+            type="button"
+            onClick={onSave}
+            className={`min-h-[44px] px-4 rounded-xl text-xs font-display uppercase tracking-wider font-bold flex items-center gap-2 transition-all ${
+              isSaved
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'bg-brand-red hover:bg-red-700 text-white shadow-md'
+            }`}
+          >
+            <Check className="w-4 h-4" />
+            <span>{isSaved ? 'Diagramação Gravada!' : 'Gravar no Celular'}</span>
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={onOpenRealSite || (() => window.open('/?view=home', '_blank'))}
+          className="min-h-[44px] px-4 bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-white rounded-xl text-xs font-display uppercase tracking-wider font-semibold flex items-center gap-2 transition-all hover:border-neutral-500"
+        >
+          <ExternalLink className="w-4 h-4 text-brand-gold" />
+          <span>Abrir Site Real no Celular</span>
+        </button>
       </div>
     </div>
   );
