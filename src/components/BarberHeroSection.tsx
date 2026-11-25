@@ -1,10 +1,12 @@
 import React from 'react';
-import { Calendar, Star, ChevronDown, Award } from 'lucide-react';
+import { ChevronDown, Award } from 'lucide-react';
 import { BARBER_PROFILE } from '../data/barberData';
 import { HeroImageSettings } from '../types/barber';
+import { DEFAULT_HERO_SETTINGS } from '../hooks/useHeroAdjuster';
 import { BrandBar } from './BrandBar';
 import { PromoBanner } from './PromoBanner';
 import { BarberHeroCutout } from './hero/BarberHeroCutout';
+import { HeroActionButtons } from './hero/HeroActionButtons';
 
 interface BarberHeroSectionProps {
   imageSettings?: HeroImageSettings;
@@ -13,36 +15,16 @@ interface BarberHeroSectionProps {
 
 export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
   imageSettings,
+  isSimulator = false,
 }) => {
-  const currentSettings: HeroImageSettings = imageSettings || {
-    scale: 118,
-    xOffset: 2,
-    yOffset: -234,
-    zIndex: 10,
-    opacity: 100,
-    brightness: 107,
-    contrast: 105,
-    textYOffset: 195,
-    textScale: 108,
-    textBackdropOpacity: 65,
-    buttonsYOffset: 160,
-    buttonsScale: 102,
-    whatsappXOffset: 10,
-    whatsappYOffset: 20,
-    whatsappScale: 85,
-    desktopScale: 100,
-    desktopXOffset: 0,
-    desktopYOffset: 0,
-    desktopTextYOffset: 0,
-    desktopButtonsYOffset: 0,
-  };
+  const currentSettings = imageSettings || DEFAULT_HERO_SETTINGS;
 
   return (
     <section
       id="hero"
       className="relative min-h-[100dvh] sm:min-h-screen flex flex-col justify-between pt-16 sm:pt-28 md:pt-32 pb-0 overflow-hidden bg-ink"
     >
-      {/* Camada z-0: Imagem de Fundo Desacoplada (Não empurra nem distorce o fluxo vertical) */}
+      {/* Camada z-0: Imagem de Fundo Desacoplada */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
         <img
           src="/assets/img/m2-fachada-cinematic.jpg"
@@ -60,14 +42,14 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         />
       </div>
 
-      {/* Camada do Barbeiro Recortado (Mobile e Desktop) */}
-      <BarberHeroCutout settings={currentSettings} />
+      {/* Camada do Barbeiro Recortado (Simulator vs Desktop Padrão) */}
+      <BarberHeroCutout settings={currentSettings} isSimulator={isSimulator} />
 
       {/* Camada z-[15]: Degradê preservando contraste */}
       <div
         className="absolute inset-0 pointer-events-none z-[15] select-none transition-opacity duration-150"
         style={{
-          opacity: (currentSettings.textBackdropOpacity ?? 65) / 100,
+          opacity: isSimulator ? (currentSettings.textBackdropOpacity ?? 65) / 100 : 0.35,
           background: `
             radial-gradient(ellipse 70% 55% at 50% 62%, rgba(11,11,11,0.95) 0%, rgba(11,11,11,0.65) 45%, rgba(11,11,11,0.15) 75%, transparent 100%),
             linear-gradient(180deg, transparent 0%, rgba(11,11,11,0.15) 25%, rgba(11,11,11,0.70) 60%, rgba(11,11,11,0.95) 100%)
@@ -80,10 +62,18 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       <div className="max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center text-center relative z-20">
         {/* Bloco do Texto Central */}
         <div
-          className="flex flex-col items-center text-center transition-transform duration-75 origin-top sm:!transform-none"
-          style={{
-            transform: `translateY(${currentSettings.textYOffset || 0}px) scale(${(currentSettings.textScale || 100) / 100})`,
-          }}
+          className={`flex flex-col items-center text-center transition-transform duration-75 ${
+            isSimulator ? 'origin-top' : ''
+          }`}
+          style={
+            isSimulator
+              ? {
+                  transform: `translateY(${currentSettings.textYOffset || 0}px) scale(${
+                    (currentSettings.textScale || 100) / 100
+                  })`,
+                }
+              : undefined
+          }
         >
           {/* Emblema M2 Barbearia com Selo Especial */}
           <div className="relative mb-2.5 sm:mb-4 group">
@@ -120,42 +110,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         </div>
 
         {/* Bloco dos Botões de Ação */}
-        <div
-          className="mt-16 sm:mt-24 md:mt-28 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 w-full sm:w-auto transition-transform duration-75 sm:!transform-none"
-          style={{
-            transform: `translateY(${currentSettings.buttonsYOffset || 0}px) scale(${(currentSettings.buttonsScale || 100) / 100})`,
-            transformOrigin: 'top center',
-          }}
-        >
-          <a
-            href={BARBER_PROFILE.bookingAppUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto h-12 min-h-[44px] px-6 sm:px-7 bg-brand-red hover:bg-red-700 active:scale-[0.98] text-white font-display uppercase text-xs tracking-[0.18em] font-semibold flex items-center justify-center gap-2.5 rounded-sm transition-all shadow-xl shadow-red-950/50"
-          >
-            <Calendar className="w-4 h-4" />
-            <span>Agendar no AppBarber</span>
-          </a>
-
-          <a
-            href={BARBER_PROFILE.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto h-12 min-h-[44px] px-6 sm:px-7 bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700 hover:border-neutral-500 text-white font-display uppercase text-xs tracking-[0.18em] font-semibold flex items-center justify-center gap-2.5 rounded-sm transition-all backdrop-blur-sm"
-          >
-            <span className="text-xs">Instagram Oficial</span>
-          </a>
-
-          <a
-            href={BARBER_PROFILE.googleReviewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto h-12 min-h-[44px] px-6 sm:px-7 bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700 hover:border-neutral-500 text-white font-display uppercase text-xs tracking-[0.18em] font-semibold flex items-center justify-center gap-2.5 rounded-sm transition-all backdrop-blur-sm"
-          >
-            <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span>Avaliar no Google</span>
-          </a>
-        </div>
+        <HeroActionButtons settings={currentSettings} isSimulator={isSimulator} />
       </div>
 
       {/* Rodapé da Hero Desktop (Padrão Original do Computador) */}
@@ -176,7 +131,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         </span>
       </div>
 
-      {/* Traço Inferior e Exclusividade M2 no Chão / Borda Final do Celular */}
+      {/* Traço Inferior e Exclusividade M2 no Chão */}
       <div className="w-full relative z-20 mt-auto">
         <BrandBar />
         <PromoBanner />
