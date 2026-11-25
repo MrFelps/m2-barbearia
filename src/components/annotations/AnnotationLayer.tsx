@@ -75,8 +75,8 @@ export const AnnotationLayer: React.FC = () => {
 
   return (
     <>
-      {/* Barra de Ferramentas de Anotações */}
-      <aside aria-label="Ferramentas de Anotações" className="fixed bottom-20 right-4 z-40 pointer-events-auto flex items-center gap-2">
+      {/* Barra de Ferramentas de Anotações (disponível no desktop para auditoria, oculta no mobile para tela limpa) */}
+      <aside aria-label="Ferramentas de Anotações" className="fixed bottom-20 right-4 z-40 pointer-events-auto hidden sm:flex items-center gap-2">
         <button
           onClick={() => setIsVisible((prev) => !prev)}
           title={isVisible ? 'Ocultar comentários' : 'Exibir comentários'}

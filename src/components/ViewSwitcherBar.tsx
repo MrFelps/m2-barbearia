@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, QrCode, DollarSign, ChevronDown, ChevronUp, Smartphone, Sliders } from 'lucide-react';
+import { Home, QrCode, DollarSign, ChevronDown, ChevronUp, Smartphone } from 'lucide-react';
 
 export type AppView = 'home' | 'bancada' | 'caixa' | 'cliente' | 'celular';
 
@@ -8,8 +8,6 @@ interface ViewSwitcherBarProps {
   onSelectView: (view: AppView) => void;
   isSimulatorActive?: boolean;
   onToggleSimulator?: () => void;
-  onToggleAdjuster?: () => void;
-  isAdjusterOpen?: boolean;
 }
 
 export const ViewSwitcherBar: React.FC<ViewSwitcherBarProps> = ({
@@ -17,8 +15,6 @@ export const ViewSwitcherBar: React.FC<ViewSwitcherBarProps> = ({
   onSelectView,
   isSimulatorActive = false,
   onToggleSimulator,
-  onToggleAdjuster,
-  isAdjusterOpen = false,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(
     () => typeof window !== 'undefined' && window.innerWidth < 768
@@ -96,21 +92,6 @@ export const ViewSwitcherBar: React.FC<ViewSwitcherBarProps> = ({
           <Smartphone className="w-3.5 h-3.5 text-amber-400" />
           <span>📱 Celular</span>
         </button>
-
-        {onToggleAdjuster && activeView === 'home' && (
-          <button
-            onClick={onToggleAdjuster}
-            title="Ajustar posição e escala do Barbeiro na Hero"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all min-h-[44px] shrink-0 ${
-              isAdjusterOpen
-                ? 'bg-amber-600 text-white shadow-md ring-1 ring-white/30'
-                : 'text-gray-300 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Sliders className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Ajustar Barbeiro</span>
-          </button>
-        )}
 
         {onToggleSimulator && (
           <>

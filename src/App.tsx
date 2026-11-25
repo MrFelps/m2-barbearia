@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ViewSwitcherBar, AppView } from './components/ViewSwitcherBar';
 import { AppContent } from './components/AppContent';
 import { BookingBottomSheet } from './modals/BookingBottomSheet';
-import { HeroImageAdjuster } from './components/HeroImageAdjuster';
 import { MobileSimulatorFrame } from './components/simulator/MobileSimulatorFrame';
 import { SimulatorControlBar } from './components/simulator/SimulatorControlBar';
-import { SimulatorHeroAdjusterDrawer } from './components/simulator/SimulatorHeroAdjusterDrawer';
 import { BARBER_STATIONS } from './data/stationData';
 import { BarberStation } from './types/station';
 import { useHeaderState } from './hooks/useHeaderState';
@@ -33,15 +31,7 @@ export const App: React.FC = () => {
     submitBooking,
   } = useBookingFlow();
 
-  const {
-    settings: imageSettings,
-    isOpen: isAdjusterOpen,
-    isSaved: isAdjusterSaved,
-    setIsOpen: setIsAdjusterOpen,
-    updateSetting,
-    saveSettings,
-    resetSettings,
-  } = useHeroAdjuster();
+  const { settings: imageSettings } = useHeroAdjuster();
 
   // Modo embutido dentro da moldura do simulador mobile
   const isEmbedded = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('sim_embed');
@@ -100,8 +90,6 @@ export const App: React.FC = () => {
         onSelectView={setActiveView}
         isSimulatorActive={simulator.isActive}
         onToggleSimulator={simulator.toggleSimulator}
-        onToggleAdjuster={() => setIsAdjusterOpen((prev) => !prev)}
-        isAdjusterOpen={isAdjusterOpen}
       />
 
       {/* Modo Simulador Mobile Ativo com Chassi Físico */}
@@ -112,16 +100,12 @@ export const App: React.FC = () => {
             isLandscape={simulator.isLandscape}
             scale={simulator.scale}
             showFrame={simulator.showFrame}
-            isAdjusterOpen={isAdjusterOpen}
-            isSaved={isAdjusterSaved}
-            onSave={saveSettings}
             onOpenDirectly={() => window.open('/?view=home', '_blank')}
             onSelectDevice={simulator.selectDevice}
             onToggleOrientation={simulator.toggleOrientation}
             onSetScale={simulator.setScale}
             onToggleFrame={simulator.toggleFrame}
             onAutoFit={() => simulator.setScale(simulator.calculateAutoFit())}
-            onToggleAdjuster={() => setIsAdjusterOpen((prev) => !prev)}
             onClose={simulator.toggleSimulator}
           />
 
@@ -132,38 +116,12 @@ export const App: React.FC = () => {
             showFrame={simulator.showFrame}
             activeView={activeView}
             imageSettings={imageSettings}
-            isSaved={isAdjusterSaved}
-            onSave={saveSettings}
             onOpenRealSite={() => window.open('/?view=home', '_blank')}
-          />
-
-          {/* Gaveta do Joystick Circular integrado ao Simulador Mobile */}
-          <SimulatorHeroAdjusterDrawer
-            isOpen={isAdjusterOpen}
-            settings={imageSettings}
-            isSaved={isAdjusterSaved}
-            onClose={() => setIsAdjusterOpen(false)}
-            onUpdate={updateSetting}
-            onSave={saveSettings}
-            onReset={resetSettings}
           />
         </>
       ) : (
         /* Modo Desktop Padrão */
-        <>
-          {content}
-          {activeView === 'home' && (
-            <HeroImageAdjuster
-              settings={imageSettings}
-              isOpen={isAdjusterOpen}
-              isSaved={isAdjusterSaved}
-              onToggle={() => setIsAdjusterOpen((prev) => !prev)}
-              onUpdate={updateSetting}
-              onSave={saveSettings}
-              onReset={resetSettings}
-            />
-          )}
-        </>
+        content
       )}
 
       {/* Modal / Bottom Sheet de Agendamento */}

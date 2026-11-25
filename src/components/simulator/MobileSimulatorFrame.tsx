@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Check, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { DevicePreset } from '../../types/simulator';
 import { HeroImageSettings } from '../../types/barber';
 import { MobileStatusBar } from './MobileStatusBar';
@@ -11,8 +11,6 @@ interface MobileSimulatorFrameProps {
   showFrame: boolean;
   activeView: string;
   imageSettings?: HeroImageSettings;
-  isSaved?: boolean;
-  onSave?: () => void;
   onOpenRealSite?: () => void;
 }
 
@@ -23,8 +21,6 @@ export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
   showFrame,
   activeView,
   imageSettings,
-  isSaved,
-  onSave,
   onOpenRealSite,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -117,21 +113,6 @@ export const MobileSimulatorFrame: React.FC<MobileSimulatorFrameProps> = ({
 
       {/* Dock de Ações Rápidas por Fora do Celular */}
       <div className="mt-5 flex items-center gap-2.5 z-30 bg-ink-elevated/95 backdrop-blur-md border border-neutral-700/80 px-4 py-2 rounded-2xl shadow-2xl">
-        {onSave && (
-          <button
-            type="button"
-            onClick={onSave}
-            className={`min-h-[44px] px-4 rounded-xl text-xs font-display uppercase tracking-wider font-bold flex items-center gap-2 transition-all ${
-              isSaved
-                ? 'bg-emerald-600 text-white shadow-md'
-                : 'bg-brand-red hover:bg-red-700 text-white shadow-md'
-            }`}
-          >
-            <Check className="w-4 h-4" />
-            <span>{isSaved ? 'Diagramação Gravada!' : 'Gravar no Celular'}</span>
-          </button>
-        )}
-
         <button
           type="button"
           onClick={onOpenRealSite || (() => window.open('/?view=home', '_blank'))}

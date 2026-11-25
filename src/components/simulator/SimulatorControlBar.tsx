@@ -1,5 +1,5 @@
 import React from 'react';
-import { Smartphone, RotateCcw, ZoomIn, ZoomOut, X, Frame, Sliders, Check, ExternalLink } from 'lucide-react';
+import { Smartphone, RotateCcw, ZoomIn, ZoomOut, X, Frame, ExternalLink } from 'lucide-react';
 import { DEVICE_PRESETS, DevicePreset } from '../../types/simulator';
 
 interface SimulatorControlBarProps {
@@ -7,16 +7,12 @@ interface SimulatorControlBarProps {
   isLandscape: boolean;
   scale: number;
   showFrame: boolean;
-  isAdjusterOpen?: boolean;
-  isSaved?: boolean;
-  onSave?: () => void;
   onOpenDirectly?: () => void;
   onSelectDevice: (id: string) => void;
   onToggleOrientation: () => void;
   onSetScale: (scale: number) => void;
   onToggleFrame: () => void;
   onAutoFit: () => void;
-  onToggleAdjuster?: () => void;
   onClose: () => void;
 }
 
@@ -25,16 +21,12 @@ export const SimulatorControlBar: React.FC<SimulatorControlBarProps> = ({
   isLandscape,
   scale,
   showFrame,
-  isAdjusterOpen,
-  isSaved,
-  onSave,
   onOpenDirectly,
   onSelectDevice,
   onToggleOrientation,
   onSetScale,
   onToggleFrame,
   onAutoFit,
-  onToggleAdjuster,
   onClose,
 }) => {
   const currentWidth = isLandscape ? activeDevice.height : activeDevice.width;
@@ -72,33 +64,6 @@ export const SimulatorControlBar: React.FC<SimulatorControlBarProps> = ({
         >
           <RotateCcw className="w-4 h-4" />
         </button>
-
-        {onToggleAdjuster && (
-          <button
-            onClick={onToggleAdjuster}
-            title={isAdjusterOpen ? 'Fechar Ajustes' : 'Ajustar Barbeiro'}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border min-h-[44px] ${
-              isAdjusterOpen ? 'bg-brand-red text-white border-white/30 shadow-md' : 'bg-ink text-gray-300 hover:text-white border-neutral-700/80'
-            }`}
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Ajustar Barbeiro</span>
-          </button>
-        )}
-
-        {/* Botão Gravar no Celular */}
-        {onSave && (
-          <button
-            onClick={onSave}
-            title={isSaved ? 'Diagramação gravada!' : 'Gravar configurações no celular'}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border min-h-[44px] transition-all ${
-              isSaved ? 'bg-emerald-600 text-white border-emerald-500' : 'bg-brand-red hover:bg-red-700 text-white border-red-500 shadow-md'
-            }`}
-          >
-            <Check className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{isSaved ? 'Gravado!' : 'Gravar'}</span>
-          </button>
-        )}
 
         {/* Botão Abrir Site no Celular */}
         <button
