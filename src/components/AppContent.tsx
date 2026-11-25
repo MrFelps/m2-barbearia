@@ -17,7 +17,6 @@ import { CashierDashboard } from './pos/CashierDashboard';
 import { CustomerPostServiceView } from './pos/CustomerPostServiceView';
 import { MobileSystemContainer } from './mobile-system/MobileSystemContainer';
 import { M2Logo } from './M2Logo';
-import { AnnotationLayer } from './annotations/AnnotationLayer';
 import { BarberStation } from '../types/station';
 import { HeroImageSettings } from '../types/barber';
 
@@ -44,14 +43,9 @@ export const AppContent: React.FC<AppContentProps> = ({
   onSelectView,
   onSimulateClient,
 }) => {
-  const isEmbedded = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('sim_embed');
-
   return (
     <div className="w-full min-h-full flex flex-col relative">
       <BrandBar fixed />
-
-      {/* Camada de Comentários Ancorada (ativa no desktop, oculta no simulador de celular para não poluir) */}
-      {!isEmbedded && activeView === 'home' && <AnnotationLayer />}
 
       {/* Header Operacional para Bancada e Caixa */}
       {activeView !== 'home' && activeView !== 'cliente' && activeView !== 'celular' && (

@@ -13,13 +13,5 @@
   <body class="bg-ink text-white antialiased selection:bg-brand-red selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      // Carrega o widget de feedback apenas no desktop (não polui o celular real nem o simulador)
-      if (window === window.top && !new URLSearchParams(window.location.search).has('sim_embed') && window.innerWidth >= 768) {
-        const s = document.createElement('script');
-        s.src = '/assets/feedback-widget.js';
-        document.body.appendChild(s);
-      }
-    </script>
   </body>
 </html>
