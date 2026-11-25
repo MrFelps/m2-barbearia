@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sliders, User, Type, MousePointerClick, MessageCircle, Check, X } from 'lucide-react';
+import { Sliders, User, Type, MousePointerClick, MessageCircle, Check, X, Copy } from 'lucide-react';
 import { HeroImageSettings } from '../types/barber';
 import { AdjusterBarberTab } from './adjuster/AdjusterBarberTab';
 import { AdjusterTextTab } from './adjuster/AdjusterTextTab';
@@ -28,6 +28,19 @@ export const HeroImageAdjuster: React.FC<HeroImageAdjusterProps> = ({
   onReset,
 }) => {
   const [activeTab, setActiveTab] = useState<AdjustTarget>('barber');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(JSON.stringify(settings));
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // ignore
+    }
+  };
 
   return (
     <div className="fixed bottom-20 left-3 sm:left-6 z-50">
@@ -93,15 +106,25 @@ export const HeroImageAdjuster: React.FC<HeroImageAdjusterProps> = ({
             <AdjusterWhatsAppTab settings={settings} onUpdate={onUpdate} />
           )}
 
-          <button
-            onClick={onSave}
-            className={`w-full min-h-[44px] text-xs font-display uppercase tracking-wider font-bold rounded-lg flex items-center justify-center gap-2 transition-all shadow-md ${
-              isSaved ? 'bg-emerald-600 text-white' : 'bg-brand-red hover:bg-red-700 text-white'
-            }`}
-          >
-            <Check className="w-4 h-4" />
-            <span>{isSaved ? 'Posição Gravada!' : 'Gravar Alterações'}</span>
-          </button>
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="min-h-[44px] px-3 bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-white rounded-lg text-xs font-display uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 transition-colors"
+            >
+              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-brand-gold" />}
+              <span>{copied ? 'Copiado!' : 'Copiar JSON'}</span>
+            </button>
+            <button
+              onClick={onSave}
+              className={`min-h-[44px] text-xs font-display uppercase tracking-wider font-bold rounded-lg flex items-center justify-center gap-2 transition-all shadow-md ${
+                isSaved ? 'bg-emerald-600 text-white' : 'bg-brand-red hover:bg-red-700 text-white'
+              }`}
+            >
+              <Check className="w-4 h-4" />
+              <span>{isSaved ? 'Gravado!' : 'Gravar'}</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

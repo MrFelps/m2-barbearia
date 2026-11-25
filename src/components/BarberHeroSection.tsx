@@ -15,7 +15,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
 }) => {
   const currentSettings: HeroImageSettings = imageSettings || {
     scale: 118,
-    xOffset: -13,
+    xOffset: 2,
     yOffset: -234,
     zIndex: 10,
     opacity: 100,

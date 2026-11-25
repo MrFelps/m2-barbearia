@@ -20,7 +20,7 @@ const syncToServer = (data: HeroImageSettings) => {
 
 export const DEFAULT_HERO_SETTINGS: HeroImageSettings = {
   scale: 118,
-  xOffset: -13,
+  xOffset: 2,
   yOffset: -234,
   zIndex: 10,
   opacity: 100,

@@ -5,7 +5,7 @@ import { HeroImageSettings } from '../types/barber';
 describe('Hero Visual Diagramming & Adjuster Settings', () => {
   it('deve conter as configurações padrão para o barbeiro, texto e botões', () => {
     expect(DEFAULT_HERO_SETTINGS).toBeDefined();
-    expect(DEFAULT_HERO_SETTINGS.xOffset).toBe(-13);
+    expect(DEFAULT_HERO_SETTINGS.xOffset).toBe(2);
     expect(DEFAULT_HERO_SETTINGS.yOffset).toBe(-234);
     expect(DEFAULT_HERO_SETTINGS.scale).toBe(118);
     expect(DEFAULT_HERO_SETTINGS.zIndex).toBe(10);
