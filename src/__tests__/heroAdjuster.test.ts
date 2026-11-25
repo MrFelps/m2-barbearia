@@ -9,9 +9,9 @@ describe('Hero Visual Diagramming & Adjuster Settings', () => {
     expect(DEFAULT_HERO_SETTINGS.yOffset).toBe(-234);
     expect(DEFAULT_HERO_SETTINGS.scale).toBe(118);
     expect(DEFAULT_HERO_SETTINGS.zIndex).toBe(10);
-    expect(DEFAULT_HERO_SETTINGS.textYOffset).toBe(150);
+    expect(DEFAULT_HERO_SETTINGS.textYOffset).toBe(195);
     expect(DEFAULT_HERO_SETTINGS.textScale).toBe(108);
-    expect(DEFAULT_HERO_SETTINGS.buttonsYOffset).toBe(115);
+    expect(DEFAULT_HERO_SETTINGS.buttonsYOffset).toBe(160);
     expect(DEFAULT_HERO_SETTINGS.buttonsScale).toBe(102);
     expect(DEFAULT_HERO_SETTINGS.whatsappXOffset).toBe(10);
     expect(DEFAULT_HERO_SETTINGS.whatsappYOffset).toBe(20);

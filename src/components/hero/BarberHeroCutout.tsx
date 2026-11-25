@@ -23,20 +23,29 @@ export const BarberHeroCutout: React.FC<BarberHeroCutoutProps> = ({ settings }) 
         aria-hidden="true"
       >
         <div
-          className="relative w-full h-full flex items-start justify-center transition-transform duration-75"
+          className="relative transition-transform duration-75"
           style={{
             transform: 'translate(2px, 8px) scale(1.10)',
             transformOrigin: 'top center',
           }}
         >
-          <img
-            src="/assets/img/felipe-boccardo.png"
-            alt={BARBER_PROFILE.name}
-            className="h-[68vh] max-h-[580px] w-auto object-contain object-top drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
-            style={{
-              filter: `brightness(${brightness}%) contrast(${contrast}%)`,
-            }}
-          />
+          <div className="relative inline-block">
+            <img
+              src="/assets/img/felipe-boccardo.png"
+              alt={BARBER_PROFILE.name}
+              className="h-[68vh] max-h-[580px] w-auto object-contain object-top drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+              style={{
+                filter: `brightness(${brightness}%) contrast(${contrast}%)`,
+                WebkitMaskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.25) 3%, rgba(0,0,0,0.75) 8%, black 18%, black 100%)',
+                maskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.25) 3%, rgba(0,0,0,0.75) 8%, black 18%, black 100%)',
+              }}
+            />
+            {/* Degradê suave de baixo para cima disfarçando a linha inferior de corte */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-gradient-to-t from-ink via-ink/75 to-transparent"
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
 
