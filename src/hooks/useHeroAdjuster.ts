@@ -45,7 +45,14 @@ export function useHeroAdjuster() {
   const [settings, setSettings] = useState<HeroImageSettings>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return { ...DEFAULT_HERO_SETTINGS, ...JSON.parse(saved) };
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.textYOffset === 150 && parsed.buttonsYOffset === 115) {
+          parsed.textYOffset = 195;
+          parsed.buttonsYOffset = 160;
+        }
+        return { ...DEFAULT_HERO_SETTINGS, ...parsed };
+      }
       if (savedHeroSettings && Object.keys(savedHeroSettings).length > 0) {
         return { ...DEFAULT_HERO_SETTINGS, ...(savedHeroSettings as Partial<HeroImageSettings>) };
       }

@@ -53,6 +53,7 @@ export const App: React.FC = () => {
       activeView={activeView}
       activeStation={activeStation}
       imageSettings={imageSettings}
+      isSimulator={isEmbedded}
       isScrolled={isScrolled}
       isMobileMenuOpen={isMobileMenuOpen}
       onToggleMobileMenu={toggleMobileMenu}

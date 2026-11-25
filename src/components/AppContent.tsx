@@ -24,6 +24,7 @@ interface AppContentProps {
   activeView: AppView;
   activeStation: BarberStation;
   imageSettings: HeroImageSettings;
+  isSimulator?: boolean;
   isScrolled: boolean;
   isMobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
@@ -36,6 +37,7 @@ export const AppContent: React.FC<AppContentProps> = ({
   activeView,
   activeStation,
   imageSettings,
+  isSimulator = false,
   isScrolled,
   isMobileMenuOpen,
   onToggleMobileMenu,
@@ -79,7 +81,7 @@ export const AppContent: React.FC<AppContentProps> = ({
           />
           <MobileDrawer isOpen={isMobileMenuOpen} onClose={onCloseMobileMenu} />
           <main className="flex-1">
-            <BarberHeroSection imageSettings={imageSettings} />
+            <BarberHeroSection imageSettings={imageSettings} isSimulator={isSimulator} />
             <div className="hidden sm:block">
               <BrandBar />
               <PromoBanner />

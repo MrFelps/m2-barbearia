@@ -8,6 +8,7 @@ import { BarberHeroCutout } from './hero/BarberHeroCutout';
 
 interface BarberHeroSectionProps {
   imageSettings?: HeroImageSettings;
+  isSimulator?: boolean;
 }
 
 export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
@@ -21,10 +22,10 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
     opacity: 100,
     brightness: 107,
     contrast: 105,
-    textYOffset: 150,
+    textYOffset: 195,
     textScale: 108,
     textBackdropOpacity: 65,
-    buttonsYOffset: 115,
+    buttonsYOffset: 160,
     buttonsScale: 102,
     whatsappXOffset: 10,
     whatsappYOffset: 20,
@@ -77,7 +78,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
 
       {/* Camada z-20: Textos e Botões na frente da foto do barbeiro */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 my-auto flex flex-col items-center text-center relative z-20">
-        {/* Bloco do Texto Central (Ajustes aplicam-se no Mobile; Desktop permanece no padrão clássico) */}
+        {/* Bloco do Texto Central */}
         <div
           className="flex flex-col items-center text-center transition-transform duration-75 origin-top sm:!transform-none"
           style={{
@@ -118,7 +119,7 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Bloco dos Botões de Ação (Ajustes no Mobile; Desktop no padrão clássico) */}
+        {/* Bloco dos Botões de Ação */}
         <div
           className="mt-16 sm:mt-24 md:mt-28 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 w-full sm:w-auto transition-transform duration-75 sm:!transform-none"
           style={{
@@ -158,8 +159,8 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
       </div>
 
       {/* Rodapé da Hero Desktop (Padrão Original do Computador) */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-6 sm:pt-8 border-t border-white/10 hidden sm:flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-textFaint relative z-20 text-center sm:text-left">
-        <span className="font-display tracking-[0.2em] uppercase text-[11px]">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-4 pb-2 border-t border-white/10 hidden sm:flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-textFaint relative z-20 text-center sm:text-left">
+        <span className="font-display tracking-[0.18em] uppercase text-[10px] sm:text-[11px]">
           Rua América do Sul, 57 • Santo André / SP
         </span>
         <a
@@ -170,13 +171,13 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
           <span>Conheça as qualificações</span>
           <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
         </a>
-        <span className="font-display tracking-[0.2em] uppercase text-[11px] hidden md:inline">
+        <span className="font-display tracking-[0.18em] uppercase text-[10px] sm:text-[11px] hidden md:inline">
           Barba na navalhete • Corte clássico
         </span>
       </div>
 
-      {/* Traço Inferior e Exclusividade M2 no Chão do Celular */}
-      <div className="w-full relative z-20 mt-auto sm:hidden">
+      {/* Traço Inferior e Exclusividade M2 no Chão / Borda Final do Celular */}
+      <div className="w-full relative z-20 mt-auto">
         <BrandBar />
         <PromoBanner />
       </div>
