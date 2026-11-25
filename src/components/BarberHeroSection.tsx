@@ -11,11 +11,13 @@ import { HeroActionButtons } from './hero/HeroActionButtons';
 interface BarberHeroSectionProps {
   imageSettings?: HeroImageSettings;
   isSimulator?: boolean;
+  onOpenBooking?: () => void;
 }
 
 export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
   imageSettings,
   isSimulator = false,
+  onOpenBooking,
 }) => {
   const currentSettings = imageSettings || DEFAULT_HERO_SETTINGS;
 
@@ -110,7 +112,11 @@ export const BarberHeroSection: React.FC<BarberHeroSectionProps> = ({
         </div>
 
         {/* Bloco dos Botões de Ação */}
-        <HeroActionButtons settings={currentSettings} isSimulator={isSimulator} />
+        <HeroActionButtons
+          settings={currentSettings}
+          isSimulator={isSimulator}
+          onOpenBooking={onOpenBooking}
+        />
       </div>
 
       {/* Rodapé da Hero Desktop (Padrão Original do Computador) */}

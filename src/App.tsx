@@ -25,6 +25,7 @@ export const App: React.FC = () => {
     isSuccess,
     selectedService,
     selectedUnit,
+    openBooking,
     closeBooking,
     updateField,
     submitBooking,
@@ -60,6 +61,7 @@ export const App: React.FC = () => {
       onCloseMobileMenu={closeMobileMenu}
       onSelectView={setActiveView}
       onSimulateClient={handleSimulateClient}
+      onOpenBooking={() => openBooking()}
     />
   );
 

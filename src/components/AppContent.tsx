@@ -31,6 +31,7 @@ interface AppContentProps {
   onCloseMobileMenu: () => void;
   onSelectView: (view: AppView) => void;
   onSimulateClient: (station: BarberStation) => void;
+  onOpenBooking?: () => void;
 }
 
 export const AppContent: React.FC<AppContentProps> = ({
@@ -44,6 +45,7 @@ export const AppContent: React.FC<AppContentProps> = ({
   onCloseMobileMenu,
   onSelectView,
   onSimulateClient,
+  onOpenBooking,
 }) => {
   return (
     <div className="w-full min-h-full flex flex-col relative">
@@ -81,7 +83,11 @@ export const AppContent: React.FC<AppContentProps> = ({
           />
           <MobileDrawer isOpen={isMobileMenuOpen} onClose={onCloseMobileMenu} />
           <main className="flex-1">
-            <BarberHeroSection imageSettings={imageSettings} isSimulator={isSimulator} />
+            <BarberHeroSection
+              imageSettings={imageSettings}
+              isSimulator={isSimulator}
+              onOpenBooking={onOpenBooking}
+            />
             <div className="hidden sm:block">
               <BrandBar />
               <PromoBanner />
