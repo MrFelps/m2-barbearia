@@ -3,54 +3,69 @@ import { BARBER_PROFILE } from '../../data/barberData';
 import { HeroImageSettings } from '../../types/barber';
 
 interface BarberHeroCutoutProps {
-  settings: HeroImageSettings;
+  settings?: HeroImageSettings;
 }
 
 export const BarberHeroCutout: React.FC<BarberHeroCutoutProps> = ({ settings }) => {
+  const brightness = settings?.brightness ?? 107;
+  const contrast = settings?.contrast ?? 105;
+  const opacity = (settings?.opacity ?? 100) / 100;
+
   return (
-    <div
-      className="absolute right-0 sm:right-2 md:right-6 lg:right-12 xl:right-24 bottom-4 sm:bottom-8 lg:bottom-12 pointer-events-none flex items-end justify-end select-none transition-transform duration-75"
-      style={{
-        zIndex: settings.zIndex,
-        opacity: settings.opacity / 100,
-      }}
-      aria-hidden="true"
-    >
-      {/* Versão Mobile: Altura e coordenadas calibradas para o celular */}
+    <>
+      {/* Versão Mobile (Travada com precisão no Centro, cabeça inteira visível abaixo do header) */}
       <div
-        className="sm:hidden"
+        className="sm:hidden absolute inset-x-0 top-14 bottom-0 pointer-events-none flex items-start justify-center select-none overflow-hidden"
         style={{
-          transform: `translate(${settings.xOffset}px, ${settings.yOffset}px) scale(${settings.scale / 100})`,
-          transformOrigin: 'bottom center',
+          zIndex: 10,
+          opacity,
         }}
+        aria-hidden="true"
       >
-        <img
-          src="/assets/img/felipe-boccardo.png"
-          alt={BARBER_PROFILE.name}
-          className="h-[68vh] max-h-[840px] w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+        <div
+          className="relative w-full h-full flex items-start justify-center transition-transform duration-75"
           style={{
-            filter: `brightness(${settings.brightness || 105}%) contrast(${settings.contrast || 105}%)`,
+            transform: 'translate(2px, 8px) scale(1.10)',
+            transformOrigin: 'top center',
           }}
-        />
+        >
+          <img
+            src="/assets/img/felipe-boccardo.png"
+            alt={BARBER_PROFILE.name}
+            className="h-[68vh] max-h-[580px] w-auto object-contain object-top drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+            style={{
+              filter: `brightness(${brightness}%) contrast(${contrast}%)`,
+            }}
+          />
+        </div>
       </div>
 
-      {/* Versão Multi-Monitor (Monitor em Pé, Estreito, Widescreen e Ultrawide) */}
+      {/* Versão Desktop / Multi-Monitor (Travada à direita, exatamente como no print do PC aprovado) */}
       <div
-        className="hidden sm:block"
+        className="hidden sm:flex absolute right-0 sm:right-2 md:right-6 lg:right-12 xl:right-24 bottom-0 pointer-events-none items-end justify-end select-none"
         style={{
-          transform: `translate(${settings.desktopXOffset ?? 0}px, ${settings.desktopYOffset ?? 0}px) scale(${((settings.desktopScale ?? 100)) / 100})`,
-          transformOrigin: 'bottom right',
+          zIndex: 10,
+          opacity,
         }}
+        aria-hidden="true"
       >
-        <img
-          src="/assets/img/felipe-boccardo.png"
-          alt={BARBER_PROFILE.name}
-          className="sm:h-[65vh] md:h-[75vh] lg:h-[82vh] xl:h-[86vh] max-h-[880px] max-w-[50vw] sm:max-w-[45vw] lg:max-w-none w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+        <div
+          className="transition-transform duration-75"
           style={{
-            filter: `brightness(${settings.brightness || 105}%) contrast(${settings.contrast || 105}%)`,
+            transform: `translate(${settings?.desktopXOffset ?? 0}px, ${settings?.desktopYOffset ?? 0}px) scale(${(settings?.desktopScale ?? 100) / 100})`,
+            transformOrigin: 'bottom right',
           }}
-        />
+        >
+          <img
+            src="/assets/img/felipe-boccardo.png"
+            alt={BARBER_PROFILE.name}
+            className="sm:h-[74vh] md:h-[80vh] lg:h-[86vh] max-h-[880px] max-w-[50vw] sm:max-w-[45vw] lg:max-w-none w-auto object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+            style={{
+              filter: `brightness(${brightness}%) contrast(${contrast}%)`,
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
