@@ -5,9 +5,9 @@ import { HeroImageSettings } from '../types/barber';
 describe('Hero Visual Diagramming & Adjuster Settings', () => {
   it('deve conter as configurações padrão para o barbeiro, texto e botões', () => {
     expect(DEFAULT_HERO_SETTINGS).toBeDefined();
-    expect(DEFAULT_HERO_SETTINGS.xOffset).toBe(2);
-    expect(DEFAULT_HERO_SETTINGS.yOffset).toBe(-234);
-    expect(DEFAULT_HERO_SETTINGS.scale).toBe(118);
+    expect(DEFAULT_HERO_SETTINGS.xOffset).toBe(10);
+    expect(DEFAULT_HERO_SETTINGS.yOffset).toBe(-40);
+    expect(DEFAULT_HERO_SETTINGS.scale).toBe(100);
     expect(DEFAULT_HERO_SETTINGS.zIndex).toBe(10);
     expect(DEFAULT_HERO_SETTINGS.textYOffset).toBe(195);
     expect(DEFAULT_HERO_SETTINGS.textScale).toBe(108);
@@ -23,7 +23,7 @@ describe('Hero Visual Diagramming & Adjuster Settings', () => {
 
   it('deve conter configurações de iluminação e evidência do barbeiro sem deixá-lo fosco', () => {
     expect(DEFAULT_HERO_SETTINGS.opacity).toBe(100);
-    expect(DEFAULT_HERO_SETTINGS.brightness).toBe(107);
+    expect(DEFAULT_HERO_SETTINGS.brightness).toBe(105);
     expect(DEFAULT_HERO_SETTINGS.contrast).toBe(105);
     expect(DEFAULT_HERO_SETTINGS.textBackdropOpacity).toBe(65);
   });

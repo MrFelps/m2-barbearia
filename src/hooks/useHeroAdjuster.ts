@@ -19,12 +19,12 @@ const syncToServer = (data: HeroImageSettings) => {
 };
 
 export const DEFAULT_HERO_SETTINGS: HeroImageSettings = {
-  scale: 118,
-  xOffset: 2,
-  yOffset: -234,
+  scale: 100,
+  xOffset: 10,
+  yOffset: -40,
   zIndex: 10,
   opacity: 100,
-  brightness: 107,
+  brightness: 105,
   contrast: 105,
   textYOffset: 195,
   textScale: 108,
@@ -50,6 +50,11 @@ export function useHeroAdjuster() {
         if (parsed.textYOffset === 150 && parsed.buttonsYOffset === 115) {
           parsed.textYOffset = 195;
           parsed.buttonsYOffset = 160;
+        }
+        if (parsed.scale === 118 || parsed.yOffset === -234) {
+          parsed.scale = 100;
+          parsed.xOffset = 10;
+          parsed.yOffset = -40;
         }
         return { ...DEFAULT_HERO_SETTINGS, ...parsed };
       }
