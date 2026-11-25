@@ -3,7 +3,6 @@ import { ViewSwitcherBar, AppView } from './components/ViewSwitcherBar';
 import { AppContent } from './components/AppContent';
 import { BookingBottomSheet } from './modals/BookingBottomSheet';
 import { MobileSimulatorFrame } from './components/simulator/MobileSimulatorFrame';
-import { SimulatorControlBar } from './components/simulator/SimulatorControlBar';
 import { BARBER_STATIONS } from './data/stationData';
 import { BarberStation } from './types/station';
 import { useHeaderState } from './hooks/useHeaderState';
@@ -94,31 +93,15 @@ export const App: React.FC = () => {
 
       {/* Modo Simulador Mobile Ativo com Chassi Físico */}
       {simulator.isActive ? (
-        <>
-          <SimulatorControlBar
-            activeDevice={simulator.activeDevice}
-            isLandscape={simulator.isLandscape}
-            scale={simulator.scale}
-            showFrame={simulator.showFrame}
-            onOpenDirectly={() => window.open('/?view=home', '_blank')}
-            onSelectDevice={simulator.selectDevice}
-            onToggleOrientation={simulator.toggleOrientation}
-            onSetScale={simulator.setScale}
-            onToggleFrame={simulator.toggleFrame}
-            onAutoFit={() => simulator.setScale(simulator.calculateAutoFit())}
-            onClose={simulator.toggleSimulator}
-          />
-
-          <MobileSimulatorFrame
-            device={simulator.activeDevice}
-            isLandscape={simulator.isLandscape}
-            scale={simulator.scale}
-            showFrame={simulator.showFrame}
-            activeView={activeView}
-            imageSettings={imageSettings}
-            onOpenRealSite={() => window.open('/?view=home', '_blank')}
-          />
-        </>
+        <MobileSimulatorFrame
+          device={simulator.activeDevice}
+          isLandscape={simulator.isLandscape}
+          scale={simulator.scale}
+          showFrame={simulator.showFrame}
+          activeView={activeView}
+          imageSettings={imageSettings}
+          onOpenRealSite={() => window.open('/?view=home', '_blank')}
+        />
       ) : (
         /* Modo Desktop Padrão */
         content
